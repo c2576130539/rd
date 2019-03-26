@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,14 +27,14 @@ public class ShopController extends BaseController {
 
     @ApiOperation(value = "添加商店")
     @PostMapping("/shops")
-    public JSONResult addShop(ShopAddRequest request) {
+    public JSONResult addShop(@RequestBody  ShopAddRequest request) {
         shopService.addShop(request, Long.valueOf(getUserId()));
         return JSONResult.success();
     }
 
     @ApiOperation(value = "搜索商店")
     @PostMapping("/shops/search")
-    public JSONResult searchShop(ShopSearchRequest request) {
+    public JSONResult searchShop(@RequestBody ShopSearchRequest request) {
         return JSONResult.success(shopService.listShopSearch(request));
     }
 
