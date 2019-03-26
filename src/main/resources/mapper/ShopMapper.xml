@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cc.rd.dao.ShopMapper">
+  <resultMap id="BaseResultMap" type="com.cc.rd.entity.Shop">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="practice" jdbcType="BIT" property="practice" />
+    <result column="shop_rule_id" jdbcType="BIGINT" property="shopRuleId" />
+    <result column="avg_score" jdbcType="INTEGER" property="avgScore" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="delivery" jdbcType="INTEGER" property="delivery" />
+    <result column="adcode" jdbcType="INTEGER" property="adcode" />
+    <result column="city_code" jdbcType="INTEGER" property="cityCode" />
+    <result column="adress" jdbcType="VARCHAR" property="adress" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="longitude" jdbcType="DOUBLE" property="longitude" />
+    <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    <result column="extend_id" jdbcType="BIGINT" property="extendId" />
+    <result column="extend" jdbcType="VARCHAR" property="extend" />
+    <result column="last_modification_time" jdbcType="BIGINT" property="lastModificationTime" />
+    <result column="last_modifier_user_id" jdbcType="BIGINT" property="lastModifierUserId" />
+    <result column="creation_time" jdbcType="BIGINT" property="creationTime" />
+    <result column="creator_user_id" jdbcType="BIGINT" property="creatorUserId" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, name, practice, shop_rule_id, avg_score, num, delivery, adcode, city_code, 
+    adress, phone, longitude, latitude, extend_id, extend, last_modification_time, last_modifier_user_id, 
+    creation_time, creator_user_id, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.cc.rd.entity.ShopExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shop
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from shop
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.rd.entity.ShopExample">
+    delete from shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.rd.entity.Shop">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into shop (user_id, name, practice, 
+      shop_rule_id, avg_score, num, 
+      delivery, adcode, city_code, 
+      adress, phone, longitude, 
+      latitude, extend_id, extend, 
+      last_modification_time, last_modifier_user_id, 
+      creation_time, creator_user_id, is_deleted
+      )
+    values (#{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{practice,jdbcType=BIT}, 
+      #{shopRuleId,jdbcType=BIGINT}, #{avgScore,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
+      #{delivery,jdbcType=INTEGER}, #{adcode,jdbcType=INTEGER}, #{cityCode,jdbcType=INTEGER}, 
+      #{adress,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, 
+      #{latitude,jdbcType=DOUBLE}, #{extendId,jdbcType=BIGINT}, #{extend,jdbcType=VARCHAR}, 
+      #{lastModificationTime,jdbcType=BIGINT}, #{lastModifierUserId,jdbcType=BIGINT}, 
+      #{creationTime,jdbcType=BIGINT}, #{creatorUserId,jdbcType=BIGINT}, #{isDeleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.rd.entity.Shop">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="practice != null">
+        practice,
+      </if>
+      <if test="shopRuleId != null">
+        shop_rule_id,
+      </if>
+      <if test="avgScore != null">
+        avg_score,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="delivery != null">
+        delivery,
+      </if>
+      <if test="adcode != null">
+        adcode,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="adress != null">
+        adress,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="extendId != null">
+        extend_id,
+      </if>
+      <if test="extend != null">
+        extend,
+      </if>
+      <if test="lastModificationTime != null">
+        last_modification_time,
+      </if>
+      <if test="lastModifierUserId != null">
+        last_modifier_user_id,
+      </if>
+      <if test="creationTime != null">
+        creation_time,
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="practice != null">
+        #{practice,jdbcType=BIT},
+      </if>
+      <if test="shopRuleId != null">
+        #{shopRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="avgScore != null">
+        #{avgScore,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="delivery != null">
+        #{delivery,jdbcType=INTEGER},
+      </if>
+      <if test="adcode != null">
+        #{adcode,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=INTEGER},
+      </if>
+      <if test="adress != null">
+        #{adress,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="extendId != null">
+        #{extendId,jdbcType=BIGINT},
+      </if>
+      <if test="extend != null">
+        #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModificationTime != null">
+        #{lastModificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifierUserId != null">
+        #{lastModifierUserId,jdbcType=BIGINT},
+      </if>
+      <if test="creationTime != null">
+        #{creationTime,jdbcType=BIGINT},
+      </if>
+      <if test="creatorUserId != null">
+        #{creatorUserId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.rd.entity.ShopExample" resultType="java.lang.Long">
+    select count(*) from shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update shop
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.practice != null">
+        practice = #{record.practice,jdbcType=BIT},
+      </if>
+      <if test="record.shopRuleId != null">
+        shop_rule_id = #{record.shopRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.avgScore != null">
+        avg_score = #{record.avgScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.num != null">
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
+      <if test="record.delivery != null">
+        delivery = #{record.delivery,jdbcType=INTEGER},
+      </if>
+      <if test="record.adcode != null">
+        adcode = #{record.adcode,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityCode != null">
+        city_code = #{record.cityCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.adress != null">
+        adress = #{record.adress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null">
+        longitude = #{record.longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.latitude != null">
+        latitude = #{record.latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.extendId != null">
+        extend_id = #{record.extendId,jdbcType=BIGINT},
+      </if>
+      <if test="record.extend != null">
+        extend = #{record.extend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastModificationTime != null">
+        last_modification_time = #{record.lastModificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastModifierUserId != null">
+        last_modifier_user_id = #{record.lastModifierUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.creationTime != null">
+        creation_time = #{record.creationTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatorUserId != null">
+        creator_user_id = #{record.creatorUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update shop
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      practice = #{record.practice,jdbcType=BIT},
+      shop_rule_id = #{record.shopRuleId,jdbcType=BIGINT},
+      avg_score = #{record.avgScore,jdbcType=INTEGER},
+      num = #{record.num,jdbcType=INTEGER},
+      delivery = #{record.delivery,jdbcType=INTEGER},
+      adcode = #{record.adcode,jdbcType=INTEGER},
+      city_code = #{record.cityCode,jdbcType=INTEGER},
+      adress = #{record.adress,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=DOUBLE},
+      latitude = #{record.latitude,jdbcType=DOUBLE},
+      extend_id = #{record.extendId,jdbcType=BIGINT},
+      extend = #{record.extend,jdbcType=VARCHAR},
+      last_modification_time = #{record.lastModificationTime,jdbcType=BIGINT},
+      last_modifier_user_id = #{record.lastModifierUserId,jdbcType=BIGINT},
+      creation_time = #{record.creationTime,jdbcType=BIGINT},
+      creator_user_id = #{record.creatorUserId,jdbcType=BIGINT},
+      is_deleted = #{record.isDeleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.rd.entity.Shop">
+    update shop
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="practice != null">
+        practice = #{practice,jdbcType=BIT},
+      </if>
+      <if test="shopRuleId != null">
+        shop_rule_id = #{shopRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="avgScore != null">
+        avg_score = #{avgScore,jdbcType=INTEGER},
+      </if>
+      <if test="num != null">
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="delivery != null">
+        delivery = #{delivery,jdbcType=INTEGER},
+      </if>
+      <if test="adcode != null">
+        adcode = #{adcode,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=INTEGER},
+      </if>
+      <if test="adress != null">
+        adress = #{adress,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="extendId != null">
+        extend_id = #{extendId,jdbcType=BIGINT},
+      </if>
+      <if test="extend != null">
+        extend = #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModificationTime != null">
+        last_modification_time = #{lastModificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifierUserId != null">
+        last_modifier_user_id = #{lastModifierUserId,jdbcType=BIGINT},
+      </if>
+      <if test="creationTime != null">
+        creation_time = #{creationTime,jdbcType=BIGINT},
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.rd.entity.Shop">
+    update shop
+    set user_id = #{userId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      practice = #{practice,jdbcType=BIT},
+      shop_rule_id = #{shopRuleId,jdbcType=BIGINT},
+      avg_score = #{avgScore,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      delivery = #{delivery,jdbcType=INTEGER},
+      adcode = #{adcode,jdbcType=INTEGER},
+      city_code = #{cityCode,jdbcType=INTEGER},
+      adress = #{adress,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      extend_id = #{extendId,jdbcType=BIGINT},
+      extend = #{extend,jdbcType=VARCHAR},
+      last_modification_time = #{lastModificationTime,jdbcType=BIGINT},
+      last_modifier_user_id = #{lastModifierUserId,jdbcType=BIGINT},
+      creation_time = #{creationTime,jdbcType=BIGINT},
+      creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

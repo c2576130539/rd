@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cc.rd.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.cc.rd.entity.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="authentication_source" jdbcType="TINYINT" property="authenticationSource" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="gender" jdbcType="BIT" property="gender" />
+    <result column="telphone" jdbcType="VARCHAR" property="telphone" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email_address" jdbcType="VARCHAR" property="emailAddress" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="money" jdbcType="BIGINT" property="money" />
+    <result column="credit" jdbcType="INTEGER" property="credit" />
+    <result column="extra" jdbcType="VARCHAR" property="extra" />
+    <result column="last_login_time" jdbcType="BIGINT" property="lastLoginTime" />
+    <result column="last_modification_time" jdbcType="BIGINT" property="lastModificationTime" />
+    <result column="last_modifier_user_id" jdbcType="BIGINT" property="lastModifierUserId" />
+    <result column="creation_time" jdbcType="BIGINT" property="creationTime" />
+    <result column="creator_user_id" jdbcType="BIGINT" property="creatorUserId" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, authentication_source, user_name, nick_name, gender, telphone, password, email_address, 
+    code, money, credit, extra, last_login_time, last_modification_time, last_modifier_user_id, 
+    creation_time, creator_user_id, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.cc.rd.entity.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.rd.entity.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.rd.entity.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (authentication_source, user_name, nick_name, 
+      gender, telphone, password, 
+      email_address, code, money, 
+      credit, extra, last_login_time, 
+      last_modification_time, last_modifier_user_id, 
+      creation_time, creator_user_id, is_deleted
+      )
+    values (#{authenticationSource,jdbcType=TINYINT}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=BIT}, #{telphone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{emailAddress,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{money,jdbcType=BIGINT}, 
+      #{credit,jdbcType=INTEGER}, #{extra,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=BIGINT}, 
+      #{lastModificationTime,jdbcType=BIGINT}, #{lastModifierUserId,jdbcType=BIGINT}, 
+      #{creationTime,jdbcType=BIGINT}, #{creatorUserId,jdbcType=BIGINT}, #{isDeleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.rd.entity.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="authenticationSource != null">
+        authentication_source,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="telphone != null">
+        telphone,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="emailAddress != null">
+        email_address,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="credit != null">
+        credit,
+      </if>
+      <if test="extra != null">
+        extra,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="lastModificationTime != null">
+        last_modification_time,
+      </if>
+      <if test="lastModifierUserId != null">
+        last_modifier_user_id,
+      </if>
+      <if test="creationTime != null">
+        creation_time,
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="authenticationSource != null">
+        #{authenticationSource,jdbcType=TINYINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=BIT},
+      </if>
+      <if test="telphone != null">
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAddress != null">
+        #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=BIGINT},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="extra != null">
+        #{extra,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModificationTime != null">
+        #{lastModificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifierUserId != null">
+        #{lastModifierUserId,jdbcType=BIGINT},
+      </if>
+      <if test="creationTime != null">
+        #{creationTime,jdbcType=BIGINT},
+      </if>
+      <if test="creatorUserId != null">
+        #{creatorUserId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.rd.entity.UserExample" resultType="java.lang.Long">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.authenticationSource != null">
+        authentication_source = #{record.authenticationSource,jdbcType=TINYINT},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=BIT},
+      </if>
+      <if test="record.telphone != null">
+        telphone = #{record.telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailAddress != null">
+        email_address = #{record.emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null">
+        money = #{record.money,jdbcType=BIGINT},
+      </if>
+      <if test="record.credit != null">
+        credit = #{record.credit,jdbcType=INTEGER},
+      </if>
+      <if test="record.extra != null">
+        extra = #{record.extra,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastLoginTime != null">
+        last_login_time = #{record.lastLoginTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastModificationTime != null">
+        last_modification_time = #{record.lastModificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastModifierUserId != null">
+        last_modifier_user_id = #{record.lastModifierUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.creationTime != null">
+        creation_time = #{record.creationTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatorUserId != null">
+        creator_user_id = #{record.creatorUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set id = #{record.id,jdbcType=BIGINT},
+      authentication_source = #{record.authenticationSource,jdbcType=TINYINT},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=BIT},
+      telphone = #{record.telphone,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      email_address = #{record.emailAddress,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=BIGINT},
+      credit = #{record.credit,jdbcType=INTEGER},
+      extra = #{record.extra,jdbcType=VARCHAR},
+      last_login_time = #{record.lastLoginTime,jdbcType=BIGINT},
+      last_modification_time = #{record.lastModificationTime,jdbcType=BIGINT},
+      last_modifier_user_id = #{record.lastModifierUserId,jdbcType=BIGINT},
+      creation_time = #{record.creationTime,jdbcType=BIGINT},
+      creator_user_id = #{record.creatorUserId,jdbcType=BIGINT},
+      is_deleted = #{record.isDeleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.rd.entity.User">
+    update user
+    <set>
+      <if test="authenticationSource != null">
+        authentication_source = #{authenticationSource,jdbcType=TINYINT},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=BIT},
+      </if>
+      <if test="telphone != null">
+        telphone = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAddress != null">
+        email_address = #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=BIGINT},
+      </if>
+      <if test="credit != null">
+        credit = #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="extra != null">
+        extra = #{extra,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModificationTime != null">
+        last_modification_time = #{lastModificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastModifierUserId != null">
+        last_modifier_user_id = #{lastModifierUserId,jdbcType=BIGINT},
+      </if>
+      <if test="creationTime != null">
+        creation_time = #{creationTime,jdbcType=BIGINT},
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.rd.entity.User">
+    update user
+    set authentication_source = #{authenticationSource,jdbcType=TINYINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=BIT},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      email_address = #{emailAddress,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      money = #{money,jdbcType=BIGINT},
+      credit = #{credit,jdbcType=INTEGER},
+      extra = #{extra,jdbcType=VARCHAR},
+      last_login_time = #{lastLoginTime,jdbcType=BIGINT},
+      last_modification_time = #{lastModificationTime,jdbcType=BIGINT},
+      last_modifier_user_id = #{lastModifierUserId,jdbcType=BIGINT},
+      creation_time = #{creationTime,jdbcType=BIGINT},
+      creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
