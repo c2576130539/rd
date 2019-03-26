@@ -11,21 +11,19 @@ import lombok.Data;
 @Data
 public class ShopAddRequest {
 
+    private String userId;
+
     private String name;
 
-    private String type;
+    private Integer practice;
 
-    private Boolean practice;
+    private Integer adcode;
 
-    private String country;
-
-    private String state;
-
-    private String city;
-
-    private String area;
+    private Integer cityCode;
 
     private String adress;
+
+    private String phone;
 
     private Double longitude;
 

@@ -2,7 +2,7 @@ package com.cc.rd.service.shop;
 
 import com.cc.rd.request.shop.ShopAddRequest;
 import com.cc.rd.request.shop.ShopSearchRequest;
-import com.cc.rd.vo.shop.ShopVO;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -14,8 +14,18 @@ import java.util.List;
  */
 public interface ShopService {
 
-    void addShop(ShopAddRequest request);
+    /**
+     * 添加商店
+     * @param request
+     * @param userId
+     */
+    void addShop(ShopAddRequest request, Long userId);
 
-    List<ShopVO> listShop(ShopSearchRequest request);
+    /**
+     * 搜索商店
+     * @param request
+     * @return
+     */
+    PageInfo listShopSearch(ShopSearchRequest request);
 
 }

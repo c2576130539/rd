@@ -52,13 +52,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     static {
         String[] paths = new String[]{
+                "/captcha",
+                "/accounts/**",
                 "/webjars/**",
                 "/swagger-resources/**",
                 "/swagger-ui.html",
                 "/v2/api-docs",
-                "/error",
-                "/captcha",
-                "/accounts/**"
+                "/error"
         };
 
         antRequestMatchers.add(new AntPathRequestMatcher("**", "OPTIONS"));
@@ -199,7 +199,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
      * @return
      */
     private boolean isSkipChecking(HttpServletRequest req) {
-        String internalToken = req.getHeader("df_internal_token");
+        String internalToken = req.getHeader("cc_internal_token");
         return StringUtils.isNotEmpty(internalToken) && internalToken.equals(Constant.INTERNAL_TOKEN);
     }
 }
