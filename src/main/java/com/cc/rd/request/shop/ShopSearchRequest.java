@@ -19,12 +19,15 @@ public class ShopSearchRequest extends UserLocationRequest {
     private Integer adcode;
 
     private Integer cityCode;
-
+    //评分0降序，1升序
     private Integer avgScore;
-
+    //人气0降序，1升序
     private Integer num;
-
+    //配送费0升序，1降序
     private Integer delivery;
 
+    private Integer pageNum = 0;
+
+    private Integer pageSize = 20;
 }
     
