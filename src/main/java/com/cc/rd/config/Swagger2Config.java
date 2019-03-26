@@ -39,7 +39,7 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.cc.rd"))
+                .apis(RequestHandlerSelectors.basePackage("com.cc.rd.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(pars);

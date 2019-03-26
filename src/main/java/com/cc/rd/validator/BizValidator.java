@@ -1,5 +1,6 @@
 package com.cc.rd.validator;
 
+import com.cc.rd.entity.User;
 import com.cc.rd.enums.ErrorCodeEnum;
 import com.cc.rd.exception.ManagerException;
 import com.cc.rd.service.user.UserService;
