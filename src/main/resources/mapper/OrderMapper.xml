@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cc.rd.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.cc.rd.entity.Order">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="order_title" jdbcType="VARCHAR" property="orderTitle" />
+    <result column="order_starts" jdbcType="BIGINT" property="orderStarts" />
+    <result column="order_ends" jdbcType="BIGINT" property="orderEnds" />
+    <result column="order_type" jdbcType="BIT" property="orderType" />
+    <result column="order_state" jdbcType="BIT" property="orderState" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="order_adcode" jdbcType="INTEGER" property="orderAdcode" />
+    <result column="order_city_code" jdbcType="INTEGER" property="orderCityCode" />
+    <result column="order_address" jdbcType="VARCHAR" property="orderAddress" />
+    <result column="external_id" jdbcType="VARCHAR" property="externalId" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cc.rd.entity.Order">
+    <result column="order_content" jdbcType="LONGVARCHAR" property="orderContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_num, order_title, order_starts, order_ends, order_type, order_state, shop_id, 
+    order_adcode, order_city_code, order_address, external_id, update_by, update_at, 
+    create_at, create_by, is_deleted
+  </sql>
+  <sql id="Blob_Column_List">
+    order_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.cc.rd.entity.OrderExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.cc.rd.entity.OrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from order
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.rd.entity.OrderExample">
+    delete from order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.rd.entity.Order">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order (order_num, order_title, order_starts, 
+      order_ends, order_type, order_state, 
+      shop_id, order_adcode, order_city_code, 
+      order_address, external_id, update_by, 
+      update_at, create_at, create_by, 
+      is_deleted, order_content)
+    values (#{orderNum,jdbcType=INTEGER}, #{orderTitle,jdbcType=VARCHAR}, #{orderStarts,jdbcType=BIGINT}, 
+      #{orderEnds,jdbcType=BIGINT}, #{orderType,jdbcType=BIT}, #{orderState,jdbcType=BIT}, 
+      #{shopId,jdbcType=BIGINT}, #{orderAdcode,jdbcType=INTEGER}, #{orderCityCode,jdbcType=INTEGER}, 
+      #{orderAddress,jdbcType=VARCHAR}, #{externalId,jdbcType=VARCHAR}, #{updateBy,jdbcType=BIGINT}, 
+      #{updateAt,jdbcType=BIGINT}, #{createAt,jdbcType=BIGINT}, #{createBy,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=BIT}, #{orderContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.rd.entity.Order">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="orderTitle != null">
+        order_title,
+      </if>
+      <if test="orderStarts != null">
+        order_starts,
+      </if>
+      <if test="orderEnds != null">
+        order_ends,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="orderState != null">
+        order_state,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="orderAdcode != null">
+        order_adcode,
+      </if>
+      <if test="orderCityCode != null">
+        order_city_code,
+      </if>
+      <if test="orderAddress != null">
+        order_address,
+      </if>
+      <if test="externalId != null">
+        external_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="orderContent != null">
+        order_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderTitle != null">
+        #{orderTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStarts != null">
+        #{orderStarts,jdbcType=BIGINT},
+      </if>
+      <if test="orderEnds != null">
+        #{orderEnds,jdbcType=BIGINT},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=BIT},
+      </if>
+      <if test="orderState != null">
+        #{orderState,jdbcType=BIT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="orderAdcode != null">
+        #{orderAdcode,jdbcType=INTEGER},
+      </if>
+      <if test="orderCityCode != null">
+        #{orderCityCode,jdbcType=INTEGER},
+      </if>
+      <if test="orderAddress != null">
+        #{orderAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="externalId != null">
+        #{externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="orderContent != null">
+        #{orderContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.rd.entity.OrderExample" resultType="java.lang.Long">
+    select count(*) from order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNum != null">
+        order_num = #{record.orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderTitle != null">
+        order_title = #{record.orderTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderStarts != null">
+        order_starts = #{record.orderStarts,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderEnds != null">
+        order_ends = #{record.orderEnds,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderType != null">
+        order_type = #{record.orderType,jdbcType=BIT},
+      </if>
+      <if test="record.orderState != null">
+        order_state = #{record.orderState,jdbcType=BIT},
+      </if>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderAdcode != null">
+        order_adcode = #{record.orderAdcode,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderCityCode != null">
+        order_city_code = #{record.orderCityCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderAddress != null">
+        order_address = #{record.orderAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.externalId != null">
+        external_id = #{record.externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateAt != null">
+        update_at = #{record.updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="record.createAt != null">
+        create_at = #{record.createAt,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+      <if test="record.orderContent != null">
+        order_content = #{record.orderContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update order
+    set id = #{record.id,jdbcType=VARCHAR},
+      order_num = #{record.orderNum,jdbcType=INTEGER},
+      order_title = #{record.orderTitle,jdbcType=VARCHAR},
+      order_starts = #{record.orderStarts,jdbcType=BIGINT},
+      order_ends = #{record.orderEnds,jdbcType=BIGINT},
+      order_type = #{record.orderType,jdbcType=BIT},
+      order_state = #{record.orderState,jdbcType=BIT},
+      shop_id = #{record.shopId,jdbcType=BIGINT},
+      order_adcode = #{record.orderAdcode,jdbcType=INTEGER},
+      order_city_code = #{record.orderCityCode,jdbcType=INTEGER},
+      order_address = #{record.orderAddress,jdbcType=VARCHAR},
+      external_id = #{record.externalId,jdbcType=VARCHAR},
+      update_by = #{record.updateBy,jdbcType=BIGINT},
+      update_at = #{record.updateAt,jdbcType=BIGINT},
+      create_at = #{record.createAt,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=BIGINT},
+      is_deleted = #{record.isDeleted,jdbcType=BIT},
+      order_content = #{record.orderContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update order
+    set id = #{record.id,jdbcType=VARCHAR},
+      order_num = #{record.orderNum,jdbcType=INTEGER},
+      order_title = #{record.orderTitle,jdbcType=VARCHAR},
+      order_starts = #{record.orderStarts,jdbcType=BIGINT},
+      order_ends = #{record.orderEnds,jdbcType=BIGINT},
+      order_type = #{record.orderType,jdbcType=BIT},
+      order_state = #{record.orderState,jdbcType=BIT},
+      shop_id = #{record.shopId,jdbcType=BIGINT},
+      order_adcode = #{record.orderAdcode,jdbcType=INTEGER},
+      order_city_code = #{record.orderCityCode,jdbcType=INTEGER},
+      order_address = #{record.orderAddress,jdbcType=VARCHAR},
+      external_id = #{record.externalId,jdbcType=VARCHAR},
+      update_by = #{record.updateBy,jdbcType=BIGINT},
+      update_at = #{record.updateAt,jdbcType=BIGINT},
+      create_at = #{record.createAt,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=BIGINT},
+      is_deleted = #{record.isDeleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.rd.entity.Order">
+    update order
+    <set>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderTitle != null">
+        order_title = #{orderTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStarts != null">
+        order_starts = #{orderStarts,jdbcType=BIGINT},
+      </if>
+      <if test="orderEnds != null">
+        order_ends = #{orderEnds,jdbcType=BIGINT},
+      </if>
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=BIT},
+      </if>
+      <if test="orderState != null">
+        order_state = #{orderState,jdbcType=BIT},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="orderAdcode != null">
+        order_adcode = #{orderAdcode,jdbcType=INTEGER},
+      </if>
+      <if test="orderCityCode != null">
+        order_city_code = #{orderCityCode,jdbcType=INTEGER},
+      </if>
+      <if test="orderAddress != null">
+        order_address = #{orderAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="externalId != null">
+        external_id = #{externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="orderContent != null">
+        order_content = #{orderContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cc.rd.entity.Order">
+    update order
+    set order_num = #{orderNum,jdbcType=INTEGER},
+      order_title = #{orderTitle,jdbcType=VARCHAR},
+      order_starts = #{orderStarts,jdbcType=BIGINT},
+      order_ends = #{orderEnds,jdbcType=BIGINT},
+      order_type = #{orderType,jdbcType=BIT},
+      order_state = #{orderState,jdbcType=BIT},
+      shop_id = #{shopId,jdbcType=BIGINT},
+      order_adcode = #{orderAdcode,jdbcType=INTEGER},
+      order_city_code = #{orderCityCode,jdbcType=INTEGER},
+      order_address = #{orderAddress,jdbcType=VARCHAR},
+      external_id = #{externalId,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      create_at = #{createAt,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      order_content = #{orderContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.rd.entity.Order">
+    update order
+    set order_num = #{orderNum,jdbcType=INTEGER},
+      order_title = #{orderTitle,jdbcType=VARCHAR},
+      order_starts = #{orderStarts,jdbcType=BIGINT},
+      order_ends = #{orderEnds,jdbcType=BIGINT},
+      order_type = #{orderType,jdbcType=BIT},
+      order_state = #{orderState,jdbcType=BIT},
+      shop_id = #{shopId,jdbcType=BIGINT},
+      order_adcode = #{orderAdcode,jdbcType=INTEGER},
+      order_city_code = #{orderCityCode,jdbcType=INTEGER},
+      order_address = #{orderAddress,jdbcType=VARCHAR},
+      external_id = #{externalId,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      create_at = #{createAt,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

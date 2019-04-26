@@ -61,7 +61,13 @@ public interface AccountService {
      */
     void resetTelphone(TelphoneCodeRequest telphoneCodeRequest, Long userId);
 
-    void updateUserDetail(UserDetailRequest userDetailRequest, Long userId);
+    /**
+     * 更新用户信息
+     * @param userDetailRequest
+     * @param userId
+     * @return
+     */
+    Boolean updateUserDetail(UserDetailRequest userDetailRequest, Long userId);
 
     /**
      * 解锁

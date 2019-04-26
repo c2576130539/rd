@@ -41,6 +41,21 @@ public class FastValidator {
         return this;
     }
 
+    /**
+     * 数字不为空
+     * @param object
+     * @param desc
+     * @return
+     */
+    public FastValidator numNotNull(Object object, String desc) {
+
+        if (null == object) {
+            throw new ManagerException(ErrorCodeEnum.INVALID_INPUT_PARAM, desc + " can not be null");
+        }
+
+        return this;
+    }
+
     public FastValidator notNull(String objects, String desc) {
 
         if (StringUtils.isEmpty(objects)) {

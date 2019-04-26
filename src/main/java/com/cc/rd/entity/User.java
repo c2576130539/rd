@@ -23,17 +23,17 @@ public class User {
 
     private Integer credit;
 
-    private String extra;
+    private String userImage;
 
     private Long lastLoginTime;
 
-    private Long lastModificationTime;
+    private Long updateBy;
 
-    private Long lastModifierUserId;
+    private Long updateAt;
 
-    private Long creationTime;
+    private Long createAt;
 
-    private Long creatorUserId;
+    private Long createBy;
 
     private Integer isDeleted;
 
@@ -125,12 +125,12 @@ public class User {
         this.credit = credit;
     }
 
-    public String getExtra() {
-        return extra;
+    public String getUserImage() {
+        return userImage;
     }
 
-    public void setExtra(String extra) {
-        this.extra = extra;
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 
     public Long getLastLoginTime() {
@@ -141,36 +141,36 @@ public class User {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public Long getLastModificationTime() {
-        return lastModificationTime;
+    public Long getUpdateBy() {
+        return updateBy;
     }
 
-    public void setLastModificationTime(Long lastModificationTime) {
-        this.lastModificationTime = lastModificationTime;
+    public void setUpdateBy(Long updateBy) {
+        this.updateBy = updateBy;
     }
 
-    public Long getLastModifierUserId() {
-        return lastModifierUserId;
+    public Long getUpdateAt() {
+        return updateAt;
     }
 
-    public void setLastModifierUserId(Long lastModifierUserId) {
-        this.lastModifierUserId = lastModifierUserId;
+    public void setUpdateAt(Long updateAt) {
+        this.updateAt = updateAt;
     }
 
-    public Long getCreationTime() {
-        return creationTime;
+    public Long getCreateAt() {
+        return createAt;
     }
 
-    public void setCreationTime(Long creationTime) {
-        this.creationTime = creationTime;
+    public void setCreateAt(Long createAt) {
+        this.createAt = createAt;
     }
 
-    public Long getCreatorUserId() {
-        return creatorUserId;
+    public Long getCreateBy() {
+        return createBy;
     }
 
-    public void setCreatorUserId(Long creatorUserId) {
-        this.creatorUserId = creatorUserId;
+    public void setCreateBy(Long createBy) {
+        this.createBy = createBy;
     }
 
     public Integer getIsDeleted() {

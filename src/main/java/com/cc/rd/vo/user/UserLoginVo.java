@@ -23,5 +23,7 @@ public class UserLoginVo {
 
     private Integer credit;
 
+    private String userImage;
+
 }
     

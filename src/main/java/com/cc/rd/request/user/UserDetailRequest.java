@@ -15,6 +15,11 @@ public class UserDetailRequest {
 
     private String nickName;
 
-    private String gender;
+    private Integer gender;
+
+    /**
+     * 头像
+     */
+    private String hash;
 }
     

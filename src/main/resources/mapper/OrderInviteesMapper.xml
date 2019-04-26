@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cc.rd.dao.ShopRuleMapper">
-  <resultMap id="BaseResultMap" type="com.cc.rd.entity.ShopRule">
+<mapper namespace="com.cc.rd.dao.OrderInviteesMapper">
+  <resultMap id="BaseResultMap" type="com.cc.rd.entity.OrderInvitees">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="start_time" jdbcType="BIGINT" property="startTime" />
-    <result column="end_time" jdbcType="BIGINT" property="endTime" />
-    <result column="is_cross" jdbcType="BIT" property="isCross" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="creator_user_id" jdbcType="BIGINT" property="creatorUserId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="event_id" jdbcType="VARCHAR" property="eventId" />
+    <result column="response_type" jdbcType="BIT" property="responseType" />
+    <result column="response_time" jdbcType="BIGINT" property="responseTime" />
+    <result column="type" jdbcType="BIT" property="type" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -69,15 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, start_time, end_time, is_cross, content, creator_user_id, is_deleted
+    id, user_id, event_id, response_type, response_time, type, is_deleted
   </sql>
-  <select id="selectByExample" parameterType="com.cc.rd.entity.ShopRuleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.cc.rd.entity.OrderInviteesExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from shop_rule
+    from order_invitees
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,102 +88,102 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from shop_rule
+    from order_invitees
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from shop_rule
+    delete from order_invitees
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.cc.rd.entity.ShopRuleExample">
-    delete from shop_rule
+  <delete id="deleteByExample" parameterType="com.cc.rd.entity.OrderInviteesExample">
+    delete from order_invitees
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.cc.rd.entity.ShopRule">
+  <insert id="insert" parameterType="com.cc.rd.entity.OrderInvitees">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into shop_rule (start_time, end_time, is_cross, 
-      content, creator_user_id, is_deleted
+    insert into order_invitees (user_id, event_id, response_type, 
+      response_time, type, is_deleted
       )
-    values (#{startTime,jdbcType=BIGINT}, #{endTime,jdbcType=BIGINT}, #{isCross,jdbcType=BIT}, 
-      #{content,jdbcType=VARCHAR}, #{creatorUserId,jdbcType=BIGINT}, #{isDeleted,jdbcType=BIT}
+    values (#{userId,jdbcType=BIGINT}, #{eventId,jdbcType=VARCHAR}, #{responseType,jdbcType=BIT}, 
+      #{responseTime,jdbcType=BIGINT}, #{type,jdbcType=BIT}, #{isDeleted,jdbcType=BIT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cc.rd.entity.ShopRule">
+  <insert id="insertSelective" parameterType="com.cc.rd.entity.OrderInvitees">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into shop_rule
+    insert into order_invitees
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="startTime != null">
-        start_time,
+      <if test="userId != null">
+        user_id,
       </if>
-      <if test="endTime != null">
-        end_time,
+      <if test="eventId != null">
+        event_id,
       </if>
-      <if test="isCross != null">
-        is_cross,
+      <if test="responseType != null">
+        response_type,
       </if>
-      <if test="content != null">
-        content,
+      <if test="responseTime != null">
+        response_time,
       </if>
-      <if test="creatorUserId != null">
-        creator_user_id,
+      <if test="type != null">
+        type,
       </if>
       <if test="isDeleted != null">
         is_deleted,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="startTime != null">
-        #{startTime,jdbcType=BIGINT},
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
       </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=BIGINT},
+      <if test="eventId != null">
+        #{eventId,jdbcType=VARCHAR},
       </if>
-      <if test="isCross != null">
-        #{isCross,jdbcType=BIT},
+      <if test="responseType != null">
+        #{responseType,jdbcType=BIT},
       </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
+      <if test="responseTime != null">
+        #{responseTime,jdbcType=BIGINT},
       </if>
-      <if test="creatorUserId != null">
-        #{creatorUserId,jdbcType=BIGINT},
+      <if test="type != null">
+        #{type,jdbcType=BIT},
       </if>
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.cc.rd.entity.ShopRuleExample" resultType="java.lang.Long">
-    select count(*) from shop_rule
+  <select id="countByExample" parameterType="com.cc.rd.entity.OrderInviteesExample" resultType="java.lang.Long">
+    select count(*) from order_invitees
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update shop_rule
+    update order_invitees
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.startTime != null">
-        start_time = #{record.startTime,jdbcType=BIGINT},
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
       </if>
-      <if test="record.endTime != null">
-        end_time = #{record.endTime,jdbcType=BIGINT},
+      <if test="record.eventId != null">
+        event_id = #{record.eventId,jdbcType=VARCHAR},
       </if>
-      <if test="record.isCross != null">
-        is_cross = #{record.isCross,jdbcType=BIT},
+      <if test="record.responseType != null">
+        response_type = #{record.responseType,jdbcType=BIT},
       </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=VARCHAR},
+      <if test="record.responseTime != null">
+        response_time = #{record.responseTime,jdbcType=BIGINT},
       </if>
-      <if test="record.creatorUserId != null">
-        creator_user_id = #{record.creatorUserId,jdbcType=BIGINT},
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=BIT},
       </if>
       <if test="record.isDeleted != null">
         is_deleted = #{record.isDeleted,jdbcType=BIT},
@@ -194,35 +194,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update shop_rule
+    update order_invitees
     set id = #{record.id,jdbcType=BIGINT},
-      start_time = #{record.startTime,jdbcType=BIGINT},
-      end_time = #{record.endTime,jdbcType=BIGINT},
-      is_cross = #{record.isCross,jdbcType=BIT},
-      content = #{record.content,jdbcType=VARCHAR},
-      creator_user_id = #{record.creatorUserId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      event_id = #{record.eventId,jdbcType=VARCHAR},
+      response_type = #{record.responseType,jdbcType=BIT},
+      response_time = #{record.responseTime,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=BIT},
       is_deleted = #{record.isDeleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cc.rd.entity.ShopRule">
-    update shop_rule
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.rd.entity.OrderInvitees">
+    update order_invitees
     <set>
-      <if test="startTime != null">
-        start_time = #{startTime,jdbcType=BIGINT},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="endTime != null">
-        end_time = #{endTime,jdbcType=BIGINT},
+      <if test="eventId != null">
+        event_id = #{eventId,jdbcType=VARCHAR},
       </if>
-      <if test="isCross != null">
-        is_cross = #{isCross,jdbcType=BIT},
+      <if test="responseType != null">
+        response_type = #{responseType,jdbcType=BIT},
       </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
+      <if test="responseTime != null">
+        response_time = #{responseTime,jdbcType=BIGINT},
       </if>
-      <if test="creatorUserId != null">
-        creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+      <if test="type != null">
+        type = #{type,jdbcType=BIT},
       </if>
       <if test="isDeleted != null">
         is_deleted = #{isDeleted,jdbcType=BIT},
@@ -230,13 +230,13 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cc.rd.entity.ShopRule">
-    update shop_rule
-    set start_time = #{startTime,jdbcType=BIGINT},
-      end_time = #{endTime,jdbcType=BIGINT},
-      is_cross = #{isCross,jdbcType=BIT},
-      content = #{content,jdbcType=VARCHAR},
-      creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+  <update id="updateByPrimaryKey" parameterType="com.cc.rd.entity.OrderInvitees">
+    update order_invitees
+    set user_id = #{userId,jdbcType=BIGINT},
+      event_id = #{eventId,jdbcType=VARCHAR},
+      response_type = #{responseType,jdbcType=BIT},
+      response_time = #{responseTime,jdbcType=BIGINT},
+      type = #{type,jdbcType=BIT},
       is_deleted = #{isDeleted,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>

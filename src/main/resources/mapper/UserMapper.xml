@@ -13,12 +13,12 @@
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="money" jdbcType="BIGINT" property="money" />
     <result column="credit" jdbcType="INTEGER" property="credit" />
-    <result column="extra" jdbcType="VARCHAR" property="extra" />
+    <result column="user_image" jdbcType="VARCHAR" property="userImage" />
     <result column="last_login_time" jdbcType="BIGINT" property="lastLoginTime" />
-    <result column="last_modification_time" jdbcType="BIGINT" property="lastModificationTime" />
-    <result column="last_modifier_user_id" jdbcType="BIGINT" property="lastModifierUserId" />
-    <result column="creation_time" jdbcType="BIGINT" property="creationTime" />
-    <result column="creator_user_id" jdbcType="BIGINT" property="creatorUserId" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -81,8 +81,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, authentication_source, user_name, nick_name, gender, telphone, password, email_address, 
-    code, money, credit, extra, last_login_time, last_modification_time, last_modifier_user_id, 
-    creation_time, creator_user_id, is_deleted
+    code, money, credit, user_image, last_login_time, update_by, update_at, create_at, 
+    create_by, is_deleted
   </sql>
   <select id="selectByExample" parameterType="com.cc.rd.entity.UserExample" resultMap="BaseResultMap">
     select
@@ -121,17 +121,15 @@
     insert into user (authentication_source, user_name, nick_name, 
       gender, telphone, password, 
       email_address, code, money, 
-      credit, extra, last_login_time, 
-      last_modification_time, last_modifier_user_id, 
-      creation_time, creator_user_id, is_deleted
-      )
+      credit, user_image, last_login_time, 
+      update_by, update_at, create_at, 
+      create_by, is_deleted)
     values (#{authenticationSource,jdbcType=TINYINT}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
       #{gender,jdbcType=BIT}, #{telphone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{emailAddress,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{money,jdbcType=BIGINT}, 
-      #{credit,jdbcType=INTEGER}, #{extra,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=BIGINT}, 
-      #{lastModificationTime,jdbcType=BIGINT}, #{lastModifierUserId,jdbcType=BIGINT}, 
-      #{creationTime,jdbcType=BIGINT}, #{creatorUserId,jdbcType=BIGINT}, #{isDeleted,jdbcType=BIT}
-      )
+      #{credit,jdbcType=INTEGER}, #{userImage,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=BIGINT}, 
+      #{updateBy,jdbcType=BIGINT}, #{updateAt,jdbcType=BIGINT}, #{createAt,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cc.rd.entity.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -169,23 +167,23 @@
       <if test="credit != null">
         credit,
       </if>
-      <if test="extra != null">
-        extra,
+      <if test="userImage != null">
+        user_image,
       </if>
       <if test="lastLoginTime != null">
         last_login_time,
       </if>
-      <if test="lastModificationTime != null">
-        last_modification_time,
+      <if test="updateBy != null">
+        update_by,
       </if>
-      <if test="lastModifierUserId != null">
-        last_modifier_user_id,
+      <if test="updateAt != null">
+        update_at,
       </if>
-      <if test="creationTime != null">
-        creation_time,
+      <if test="createAt != null">
+        create_at,
       </if>
-      <if test="creatorUserId != null">
-        creator_user_id,
+      <if test="createBy != null">
+        create_by,
       </if>
       <if test="isDeleted != null">
         is_deleted,
@@ -222,23 +220,23 @@
       <if test="credit != null">
         #{credit,jdbcType=INTEGER},
       </if>
-      <if test="extra != null">
-        #{extra,jdbcType=VARCHAR},
+      <if test="userImage != null">
+        #{userImage,jdbcType=VARCHAR},
       </if>
       <if test="lastLoginTime != null">
         #{lastLoginTime,jdbcType=BIGINT},
       </if>
-      <if test="lastModificationTime != null">
-        #{lastModificationTime,jdbcType=BIGINT},
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
       </if>
-      <if test="lastModifierUserId != null">
-        #{lastModifierUserId,jdbcType=BIGINT},
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
       </if>
-      <if test="creationTime != null">
-        #{creationTime,jdbcType=BIGINT},
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
       </if>
-      <if test="creatorUserId != null">
-        #{creatorUserId,jdbcType=BIGINT},
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
       </if>
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=BIT},
@@ -287,23 +285,23 @@
       <if test="record.credit != null">
         credit = #{record.credit,jdbcType=INTEGER},
       </if>
-      <if test="record.extra != null">
-        extra = #{record.extra,jdbcType=VARCHAR},
+      <if test="record.userImage != null">
+        user_image = #{record.userImage,jdbcType=VARCHAR},
       </if>
       <if test="record.lastLoginTime != null">
         last_login_time = #{record.lastLoginTime,jdbcType=BIGINT},
       </if>
-      <if test="record.lastModificationTime != null">
-        last_modification_time = #{record.lastModificationTime,jdbcType=BIGINT},
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=BIGINT},
       </if>
-      <if test="record.lastModifierUserId != null">
-        last_modifier_user_id = #{record.lastModifierUserId,jdbcType=BIGINT},
+      <if test="record.updateAt != null">
+        update_at = #{record.updateAt,jdbcType=BIGINT},
       </if>
-      <if test="record.creationTime != null">
-        creation_time = #{record.creationTime,jdbcType=BIGINT},
+      <if test="record.createAt != null">
+        create_at = #{record.createAt,jdbcType=BIGINT},
       </if>
-      <if test="record.creatorUserId != null">
-        creator_user_id = #{record.creatorUserId,jdbcType=BIGINT},
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=BIGINT},
       </if>
       <if test="record.isDeleted != null">
         is_deleted = #{record.isDeleted,jdbcType=BIT},
@@ -326,12 +324,12 @@
       code = #{record.code,jdbcType=VARCHAR},
       money = #{record.money,jdbcType=BIGINT},
       credit = #{record.credit,jdbcType=INTEGER},
-      extra = #{record.extra,jdbcType=VARCHAR},
+      user_image = #{record.userImage,jdbcType=VARCHAR},
       last_login_time = #{record.lastLoginTime,jdbcType=BIGINT},
-      last_modification_time = #{record.lastModificationTime,jdbcType=BIGINT},
-      last_modifier_user_id = #{record.lastModifierUserId,jdbcType=BIGINT},
-      creation_time = #{record.creationTime,jdbcType=BIGINT},
-      creator_user_id = #{record.creatorUserId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=BIGINT},
+      update_at = #{record.updateAt,jdbcType=BIGINT},
+      create_at = #{record.createAt,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=BIGINT},
       is_deleted = #{record.isDeleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -370,23 +368,23 @@
       <if test="credit != null">
         credit = #{credit,jdbcType=INTEGER},
       </if>
-      <if test="extra != null">
-        extra = #{extra,jdbcType=VARCHAR},
+      <if test="userImage != null">
+        user_image = #{userImage,jdbcType=VARCHAR},
       </if>
       <if test="lastLoginTime != null">
         last_login_time = #{lastLoginTime,jdbcType=BIGINT},
       </if>
-      <if test="lastModificationTime != null">
-        last_modification_time = #{lastModificationTime,jdbcType=BIGINT},
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
       </if>
-      <if test="lastModifierUserId != null">
-        last_modifier_user_id = #{lastModifierUserId,jdbcType=BIGINT},
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
       </if>
-      <if test="creationTime != null">
-        creation_time = #{creationTime,jdbcType=BIGINT},
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=BIGINT},
       </if>
-      <if test="creatorUserId != null">
-        creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
       </if>
       <if test="isDeleted != null">
         is_deleted = #{isDeleted,jdbcType=BIT},
@@ -406,12 +404,12 @@
       code = #{code,jdbcType=VARCHAR},
       money = #{money,jdbcType=BIGINT},
       credit = #{credit,jdbcType=INTEGER},
-      extra = #{extra,jdbcType=VARCHAR},
+      user_image = #{userImage,jdbcType=VARCHAR},
       last_login_time = #{lastLoginTime,jdbcType=BIGINT},
-      last_modification_time = #{lastModificationTime,jdbcType=BIGINT},
-      last_modifier_user_id = #{lastModifierUserId,jdbcType=BIGINT},
-      creation_time = #{creationTime,jdbcType=BIGINT},
-      creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      create_at = #{createAt,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=BIGINT},
       is_deleted = #{isDeleted,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>

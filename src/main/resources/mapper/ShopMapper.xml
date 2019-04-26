@@ -4,24 +4,24 @@
   <resultMap id="BaseResultMap" type="com.cc.rd.entity.Shop">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
     <result column="practice" jdbcType="BIT" property="practice" />
-    <result column="shop_rule_id" jdbcType="BIGINT" property="shopRuleId" />
-    <result column="avg_score" jdbcType="INTEGER" property="avgScore" />
-    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="shop_avg_score" jdbcType="INTEGER" property="shopAvgScore" />
+    <result column="shop_num" jdbcType="INTEGER" property="shopNum" />
     <result column="delivery" jdbcType="INTEGER" property="delivery" />
-    <result column="adcode" jdbcType="INTEGER" property="adcode" />
-    <result column="city_code" jdbcType="INTEGER" property="cityCode" />
-    <result column="adress" jdbcType="VARCHAR" property="adress" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="longitude" jdbcType="DOUBLE" property="longitude" />
-    <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    <result column="shop_adcode" jdbcType="INTEGER" property="shopAdcode" />
+    <result column="shop_city_code" jdbcType="INTEGER" property="shopCityCode" />
+    <result column="shop_adress" jdbcType="VARCHAR" property="shopAdress" />
+    <result column="shop_phone" jdbcType="VARCHAR" property="shopPhone" />
+    <result column="shop_longitude" jdbcType="DOUBLE" property="shopLongitude" />
+    <result column="shop_latitude" jdbcType="DOUBLE" property="shopLatitude" />
+    <result column="shop_image" jdbcType="VARCHAR" property="shopImage" />
     <result column="extend_id" jdbcType="BIGINT" property="extendId" />
     <result column="extend" jdbcType="VARCHAR" property="extend" />
-    <result column="last_modification_time" jdbcType="BIGINT" property="lastModificationTime" />
-    <result column="last_modifier_user_id" jdbcType="BIGINT" property="lastModifierUserId" />
-    <result column="creation_time" jdbcType="BIGINT" property="creationTime" />
-    <result column="creator_user_id" jdbcType="BIGINT" property="creatorUserId" />
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -83,9 +83,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, name, practice, shop_rule_id, avg_score, num, delivery, adcode, city_code, 
-    adress, phone, longitude, latitude, extend_id, extend, last_modification_time, last_modifier_user_id, 
-    creation_time, creator_user_id, is_deleted
+    id, user_id, shop_name, practice, shop_avg_score, shop_num, delivery, shop_adcode, 
+    shop_city_code, shop_adress, shop_phone, shop_longitude, shop_latitude, shop_image, 
+    extend_id, extend, update_at, update_by, create_at, create_by, is_deleted
   </sql>
   <select id="selectByExample" parameterType="com.cc.rd.entity.ShopExample" resultMap="BaseResultMap">
     select
@@ -121,22 +121,20 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into shop (user_id, name, practice, 
-      shop_rule_id, avg_score, num, 
-      delivery, adcode, city_code, 
-      adress, phone, longitude, 
-      latitude, extend_id, extend, 
-      last_modification_time, last_modifier_user_id, 
-      creation_time, creator_user_id, is_deleted
-      )
-    values (#{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{practice,jdbcType=BIT}, 
-      #{shopRuleId,jdbcType=BIGINT}, #{avgScore,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
-      #{delivery,jdbcType=INTEGER}, #{adcode,jdbcType=INTEGER}, #{cityCode,jdbcType=INTEGER}, 
-      #{adress,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, 
-      #{latitude,jdbcType=DOUBLE}, #{extendId,jdbcType=BIGINT}, #{extend,jdbcType=VARCHAR}, 
-      #{lastModificationTime,jdbcType=BIGINT}, #{lastModifierUserId,jdbcType=BIGINT}, 
-      #{creationTime,jdbcType=BIGINT}, #{creatorUserId,jdbcType=BIGINT}, #{isDeleted,jdbcType=BIT}
-      )
+    insert into shop (user_id, shop_name, practice, 
+      shop_avg_score, shop_num, delivery, 
+      shop_adcode, shop_city_code, shop_adress, 
+      shop_phone, shop_longitude, shop_latitude, 
+      shop_image, extend_id, extend, 
+      update_at, update_by, create_at, 
+      create_by, is_deleted)
+    values (#{userId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR}, #{practice,jdbcType=BIT}, 
+      #{shopAvgScore,jdbcType=INTEGER}, #{shopNum,jdbcType=INTEGER}, #{delivery,jdbcType=INTEGER}, 
+      #{shopAdcode,jdbcType=INTEGER}, #{shopCityCode,jdbcType=INTEGER}, #{shopAdress,jdbcType=VARCHAR}, 
+      #{shopPhone,jdbcType=VARCHAR}, #{shopLongitude,jdbcType=DOUBLE}, #{shopLatitude,jdbcType=DOUBLE}, 
+      #{shopImage,jdbcType=VARCHAR}, #{extendId,jdbcType=BIGINT}, #{extend,jdbcType=VARCHAR}, 
+      #{updateAt,jdbcType=BIGINT}, #{updateBy,jdbcType=BIGINT}, #{createAt,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cc.rd.entity.Shop">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -147,41 +145,41 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="name != null">
-        name,
+      <if test="shopName != null">
+        shop_name,
       </if>
       <if test="practice != null">
         practice,
       </if>
-      <if test="shopRuleId != null">
-        shop_rule_id,
+      <if test="shopAvgScore != null">
+        shop_avg_score,
       </if>
-      <if test="avgScore != null">
-        avg_score,
-      </if>
-      <if test="num != null">
-        num,
+      <if test="shopNum != null">
+        shop_num,
       </if>
       <if test="delivery != null">
         delivery,
       </if>
-      <if test="adcode != null">
-        adcode,
+      <if test="shopAdcode != null">
+        shop_adcode,
       </if>
-      <if test="cityCode != null">
-        city_code,
+      <if test="shopCityCode != null">
+        shop_city_code,
       </if>
-      <if test="adress != null">
-        adress,
+      <if test="shopAdress != null">
+        shop_adress,
       </if>
-      <if test="phone != null">
-        phone,
+      <if test="shopPhone != null">
+        shop_phone,
       </if>
-      <if test="longitude != null">
-        longitude,
+      <if test="shopLongitude != null">
+        shop_longitude,
       </if>
-      <if test="latitude != null">
-        latitude,
+      <if test="shopLatitude != null">
+        shop_latitude,
+      </if>
+      <if test="shopImage != null">
+        shop_image,
       </if>
       <if test="extendId != null">
         extend_id,
@@ -189,17 +187,17 @@
       <if test="extend != null">
         extend,
       </if>
-      <if test="lastModificationTime != null">
-        last_modification_time,
+      <if test="updateAt != null">
+        update_at,
       </if>
-      <if test="lastModifierUserId != null">
-        last_modifier_user_id,
+      <if test="updateBy != null">
+        update_by,
       </if>
-      <if test="creationTime != null">
-        creation_time,
+      <if test="createAt != null">
+        create_at,
       </if>
-      <if test="creatorUserId != null">
-        creator_user_id,
+      <if test="createBy != null">
+        create_by,
       </if>
       <if test="isDeleted != null">
         is_deleted,
@@ -209,41 +207,41 @@
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
       </if>
       <if test="practice != null">
         #{practice,jdbcType=BIT},
       </if>
-      <if test="shopRuleId != null">
-        #{shopRuleId,jdbcType=BIGINT},
+      <if test="shopAvgScore != null">
+        #{shopAvgScore,jdbcType=INTEGER},
       </if>
-      <if test="avgScore != null">
-        #{avgScore,jdbcType=INTEGER},
-      </if>
-      <if test="num != null">
-        #{num,jdbcType=INTEGER},
+      <if test="shopNum != null">
+        #{shopNum,jdbcType=INTEGER},
       </if>
       <if test="delivery != null">
         #{delivery,jdbcType=INTEGER},
       </if>
-      <if test="adcode != null">
-        #{adcode,jdbcType=INTEGER},
+      <if test="shopAdcode != null">
+        #{shopAdcode,jdbcType=INTEGER},
       </if>
-      <if test="cityCode != null">
-        #{cityCode,jdbcType=INTEGER},
+      <if test="shopCityCode != null">
+        #{shopCityCode,jdbcType=INTEGER},
       </if>
-      <if test="adress != null">
-        #{adress,jdbcType=VARCHAR},
+      <if test="shopAdress != null">
+        #{shopAdress,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
+      <if test="shopPhone != null">
+        #{shopPhone,jdbcType=VARCHAR},
       </if>
-      <if test="longitude != null">
-        #{longitude,jdbcType=DOUBLE},
+      <if test="shopLongitude != null">
+        #{shopLongitude,jdbcType=DOUBLE},
       </if>
-      <if test="latitude != null">
-        #{latitude,jdbcType=DOUBLE},
+      <if test="shopLatitude != null">
+        #{shopLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="shopImage != null">
+        #{shopImage,jdbcType=VARCHAR},
       </if>
       <if test="extendId != null">
         #{extendId,jdbcType=BIGINT},
@@ -251,17 +249,17 @@
       <if test="extend != null">
         #{extend,jdbcType=VARCHAR},
       </if>
-      <if test="lastModificationTime != null">
-        #{lastModificationTime,jdbcType=BIGINT},
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
       </if>
-      <if test="lastModifierUserId != null">
-        #{lastModifierUserId,jdbcType=BIGINT},
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
       </if>
-      <if test="creationTime != null">
-        #{creationTime,jdbcType=BIGINT},
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
       </if>
-      <if test="creatorUserId != null">
-        #{creatorUserId,jdbcType=BIGINT},
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
       </if>
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=BIT},
@@ -283,41 +281,41 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.shopName != null">
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
       </if>
       <if test="record.practice != null">
         practice = #{record.practice,jdbcType=BIT},
       </if>
-      <if test="record.shopRuleId != null">
-        shop_rule_id = #{record.shopRuleId,jdbcType=BIGINT},
+      <if test="record.shopAvgScore != null">
+        shop_avg_score = #{record.shopAvgScore,jdbcType=INTEGER},
       </if>
-      <if test="record.avgScore != null">
-        avg_score = #{record.avgScore,jdbcType=INTEGER},
-      </if>
-      <if test="record.num != null">
-        num = #{record.num,jdbcType=INTEGER},
+      <if test="record.shopNum != null">
+        shop_num = #{record.shopNum,jdbcType=INTEGER},
       </if>
       <if test="record.delivery != null">
         delivery = #{record.delivery,jdbcType=INTEGER},
       </if>
-      <if test="record.adcode != null">
-        adcode = #{record.adcode,jdbcType=INTEGER},
+      <if test="record.shopAdcode != null">
+        shop_adcode = #{record.shopAdcode,jdbcType=INTEGER},
       </if>
-      <if test="record.cityCode != null">
-        city_code = #{record.cityCode,jdbcType=INTEGER},
+      <if test="record.shopCityCode != null">
+        shop_city_code = #{record.shopCityCode,jdbcType=INTEGER},
       </if>
-      <if test="record.adress != null">
-        adress = #{record.adress,jdbcType=VARCHAR},
+      <if test="record.shopAdress != null">
+        shop_adress = #{record.shopAdress,jdbcType=VARCHAR},
       </if>
-      <if test="record.phone != null">
-        phone = #{record.phone,jdbcType=VARCHAR},
+      <if test="record.shopPhone != null">
+        shop_phone = #{record.shopPhone,jdbcType=VARCHAR},
       </if>
-      <if test="record.longitude != null">
-        longitude = #{record.longitude,jdbcType=DOUBLE},
+      <if test="record.shopLongitude != null">
+        shop_longitude = #{record.shopLongitude,jdbcType=DOUBLE},
       </if>
-      <if test="record.latitude != null">
-        latitude = #{record.latitude,jdbcType=DOUBLE},
+      <if test="record.shopLatitude != null">
+        shop_latitude = #{record.shopLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.shopImage != null">
+        shop_image = #{record.shopImage,jdbcType=VARCHAR},
       </if>
       <if test="record.extendId != null">
         extend_id = #{record.extendId,jdbcType=BIGINT},
@@ -325,17 +323,17 @@
       <if test="record.extend != null">
         extend = #{record.extend,jdbcType=VARCHAR},
       </if>
-      <if test="record.lastModificationTime != null">
-        last_modification_time = #{record.lastModificationTime,jdbcType=BIGINT},
+      <if test="record.updateAt != null">
+        update_at = #{record.updateAt,jdbcType=BIGINT},
       </if>
-      <if test="record.lastModifierUserId != null">
-        last_modifier_user_id = #{record.lastModifierUserId,jdbcType=BIGINT},
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=BIGINT},
       </if>
-      <if test="record.creationTime != null">
-        creation_time = #{record.creationTime,jdbcType=BIGINT},
+      <if test="record.createAt != null">
+        create_at = #{record.createAt,jdbcType=BIGINT},
       </if>
-      <if test="record.creatorUserId != null">
-        creator_user_id = #{record.creatorUserId,jdbcType=BIGINT},
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=BIGINT},
       </if>
       <if test="record.isDeleted != null">
         is_deleted = #{record.isDeleted,jdbcType=BIT},
@@ -349,24 +347,24 @@
     update shop
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
-      name = #{record.name,jdbcType=VARCHAR},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
       practice = #{record.practice,jdbcType=BIT},
-      shop_rule_id = #{record.shopRuleId,jdbcType=BIGINT},
-      avg_score = #{record.avgScore,jdbcType=INTEGER},
-      num = #{record.num,jdbcType=INTEGER},
+      shop_avg_score = #{record.shopAvgScore,jdbcType=INTEGER},
+      shop_num = #{record.shopNum,jdbcType=INTEGER},
       delivery = #{record.delivery,jdbcType=INTEGER},
-      adcode = #{record.adcode,jdbcType=INTEGER},
-      city_code = #{record.cityCode,jdbcType=INTEGER},
-      adress = #{record.adress,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      longitude = #{record.longitude,jdbcType=DOUBLE},
-      latitude = #{record.latitude,jdbcType=DOUBLE},
+      shop_adcode = #{record.shopAdcode,jdbcType=INTEGER},
+      shop_city_code = #{record.shopCityCode,jdbcType=INTEGER},
+      shop_adress = #{record.shopAdress,jdbcType=VARCHAR},
+      shop_phone = #{record.shopPhone,jdbcType=VARCHAR},
+      shop_longitude = #{record.shopLongitude,jdbcType=DOUBLE},
+      shop_latitude = #{record.shopLatitude,jdbcType=DOUBLE},
+      shop_image = #{record.shopImage,jdbcType=VARCHAR},
       extend_id = #{record.extendId,jdbcType=BIGINT},
       extend = #{record.extend,jdbcType=VARCHAR},
-      last_modification_time = #{record.lastModificationTime,jdbcType=BIGINT},
-      last_modifier_user_id = #{record.lastModifierUserId,jdbcType=BIGINT},
-      creation_time = #{record.creationTime,jdbcType=BIGINT},
-      creator_user_id = #{record.creatorUserId,jdbcType=BIGINT},
+      update_at = #{record.updateAt,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=BIGINT},
+      create_at = #{record.createAt,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=BIGINT},
       is_deleted = #{record.isDeleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -378,41 +376,41 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="shopName != null">
+        shop_name = #{shopName,jdbcType=VARCHAR},
       </if>
       <if test="practice != null">
         practice = #{practice,jdbcType=BIT},
       </if>
-      <if test="shopRuleId != null">
-        shop_rule_id = #{shopRuleId,jdbcType=BIGINT},
+      <if test="shopAvgScore != null">
+        shop_avg_score = #{shopAvgScore,jdbcType=INTEGER},
       </if>
-      <if test="avgScore != null">
-        avg_score = #{avgScore,jdbcType=INTEGER},
-      </if>
-      <if test="num != null">
-        num = #{num,jdbcType=INTEGER},
+      <if test="shopNum != null">
+        shop_num = #{shopNum,jdbcType=INTEGER},
       </if>
       <if test="delivery != null">
         delivery = #{delivery,jdbcType=INTEGER},
       </if>
-      <if test="adcode != null">
-        adcode = #{adcode,jdbcType=INTEGER},
+      <if test="shopAdcode != null">
+        shop_adcode = #{shopAdcode,jdbcType=INTEGER},
       </if>
-      <if test="cityCode != null">
-        city_code = #{cityCode,jdbcType=INTEGER},
+      <if test="shopCityCode != null">
+        shop_city_code = #{shopCityCode,jdbcType=INTEGER},
       </if>
-      <if test="adress != null">
-        adress = #{adress,jdbcType=VARCHAR},
+      <if test="shopAdress != null">
+        shop_adress = #{shopAdress,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
+      <if test="shopPhone != null">
+        shop_phone = #{shopPhone,jdbcType=VARCHAR},
       </if>
-      <if test="longitude != null">
-        longitude = #{longitude,jdbcType=DOUBLE},
+      <if test="shopLongitude != null">
+        shop_longitude = #{shopLongitude,jdbcType=DOUBLE},
       </if>
-      <if test="latitude != null">
-        latitude = #{latitude,jdbcType=DOUBLE},
+      <if test="shopLatitude != null">
+        shop_latitude = #{shopLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="shopImage != null">
+        shop_image = #{shopImage,jdbcType=VARCHAR},
       </if>
       <if test="extendId != null">
         extend_id = #{extendId,jdbcType=BIGINT},
@@ -420,17 +418,17 @@
       <if test="extend != null">
         extend = #{extend,jdbcType=VARCHAR},
       </if>
-      <if test="lastModificationTime != null">
-        last_modification_time = #{lastModificationTime,jdbcType=BIGINT},
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
       </if>
-      <if test="lastModifierUserId != null">
-        last_modifier_user_id = #{lastModifierUserId,jdbcType=BIGINT},
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
       </if>
-      <if test="creationTime != null">
-        creation_time = #{creationTime,jdbcType=BIGINT},
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=BIGINT},
       </if>
-      <if test="creatorUserId != null">
-        creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
       </if>
       <if test="isDeleted != null">
         is_deleted = #{isDeleted,jdbcType=BIT},
@@ -441,24 +439,24 @@
   <update id="updateByPrimaryKey" parameterType="com.cc.rd.entity.Shop">
     update shop
     set user_id = #{userId,jdbcType=BIGINT},
-      name = #{name,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
       practice = #{practice,jdbcType=BIT},
-      shop_rule_id = #{shopRuleId,jdbcType=BIGINT},
-      avg_score = #{avgScore,jdbcType=INTEGER},
-      num = #{num,jdbcType=INTEGER},
+      shop_avg_score = #{shopAvgScore,jdbcType=INTEGER},
+      shop_num = #{shopNum,jdbcType=INTEGER},
       delivery = #{delivery,jdbcType=INTEGER},
-      adcode = #{adcode,jdbcType=INTEGER},
-      city_code = #{cityCode,jdbcType=INTEGER},
-      adress = #{adress,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      longitude = #{longitude,jdbcType=DOUBLE},
-      latitude = #{latitude,jdbcType=DOUBLE},
+      shop_adcode = #{shopAdcode,jdbcType=INTEGER},
+      shop_city_code = #{shopCityCode,jdbcType=INTEGER},
+      shop_adress = #{shopAdress,jdbcType=VARCHAR},
+      shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      shop_longitude = #{shopLongitude,jdbcType=DOUBLE},
+      shop_latitude = #{shopLatitude,jdbcType=DOUBLE},
+      shop_image = #{shopImage,jdbcType=VARCHAR},
       extend_id = #{extendId,jdbcType=BIGINT},
       extend = #{extend,jdbcType=VARCHAR},
-      last_modification_time = #{lastModificationTime,jdbcType=BIGINT},
-      last_modifier_user_id = #{lastModifierUserId,jdbcType=BIGINT},
-      creation_time = #{creationTime,jdbcType=BIGINT},
-      creator_user_id = #{creatorUserId,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      create_at = #{createAt,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=BIGINT},
       is_deleted = #{isDeleted,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>

@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @program: AccountController
@@ -94,6 +95,12 @@ public class AccountController extends BaseController {
     public JSONResult changePwd(@RequestBody UpdatePasswordRequest updatePasswordRequest) {
         accountService.updatePassword(updatePasswordRequest, Long.valueOf(getUserId()));
         return JSONResult.success();
+    }
+
+    @ApiOperation(value = "更换头像")
+    @PutMapping("/users")
+    public JSONResult changeUserImage(@RequestBody UserDetailRequest request) {
+        return JSONResult.success(accountService.updateUserDetail(request, Long.valueOf(getUserId())));
     }
 
     @ApiOperation(value = "解锁")

@@ -23,19 +23,19 @@ public class PageUtils {
         if (!CollectionUtils.isEmpty(sourceList)) {
             pageVO.setTotal(sourceList.size());
             pageVO.setLimit(sourceList.size());
-            if (request.getOffset() != null && request.getLimit() != null) {
-                if (request.getOffset() < 0) {
-                    request.setOffset(0);
+            if (request.getPageSize() != null && request.getPageNum() != null) {
+                if (request.getPageNum() < 0) {
+                    request.setPageNum(0);
                 }
                 //页码从0开始
-                int totalPage = (int) Math.ceil(1.0 * sourceList.size() / request.getLimit()) - 1;
-                if (request.getOffset() > totalPage) {
-                    request.setOffset(totalPage);
+                int totalPage = (int) Math.ceil(1.0 * sourceList.size() / request.getPageSize()) - 1;
+                if (request.getPageNum() > totalPage) {
+                    request.setPageNum(totalPage);
                 }
-                pageVO.setOffset(request.getOffset());
-                pageVO.setLimit(request.getLimit());
-                list = sourceList.stream().skip((request.getOffset()) * request.getLimit())
-                        .limit(request.getLimit()).collect(Collectors.toList());
+                pageVO.setOffset(request.getPageNum());
+                pageVO.setLimit(request.getPageSize());
+                list = sourceList.stream().skip((request.getPageNum()) * request.getPageSize())
+                        .limit(request.getPageSize()).collect(Collectors.toList());
             } else {
                 list = sourceList;
             }

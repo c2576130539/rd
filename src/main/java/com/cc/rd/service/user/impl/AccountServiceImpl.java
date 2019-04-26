@@ -163,6 +163,7 @@ public class AccountServiceImpl implements AccountService {
 
         Map<String, Object> map = new HashMap<>(1);
         map.put("userId", user.getId().toString());
+        map.put("telphone", user.getTelphone());
         String token = "";
         try {
             token = JwtUtils.getToken(map);
@@ -173,6 +174,7 @@ public class AccountServiceImpl implements AccountService {
             userLoginVo.setGender(GenderEnum.findByCode(user.getGender()).geteDesc());
             userLoginVo.setMoney(user.getMoney());
             userLoginVo.setCredit(user.getCredit());
+            userLoginVo.setUserImage(user.getUserImage());
 
             logOutService.clearLogoutStatus(user.getId().toString());
             return userLoginVo;
@@ -231,20 +233,25 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updateUserDetail(UserDetailRequest userDetailRequest, Long userId) {
+    public Boolean updateUserDetail(UserDetailRequest request, Long userId) {
         //TODO 后期对修改用户名是否有非法昵称做校验
         UserDto userDto = new UserDto();
         userDto.setId(userId);
-        if (null != userDetailRequest.getNickName()) {
-            userDto.setNickName(userDetailRequest.getNickName());
+        if (!StringUtils.isEmpty(request.getNickName())) {
+            userDto.setNickName(request.getNickName());
         }
-        if (null != userDetailRequest.getUserName()) {
-            userDto.setUserName(userDetailRequest.getUserName());
+        if (!StringUtils.isEmpty(request.getUserName())) {
+            userDto.setUserName(request.getUserName());
         }
-        userDto.setGender(StringUtils.isEmpty(userDetailRequest.getGender())?
-                GenderEnum.OTHER.getCode():GenderEnum.findByEDesc(userDetailRequest.getGender()).getCode());
-
+        if (null != request.getGender()) {
+            userDto.setGender(request.getGender());
+        }
+        if (!StringUtils.isEmpty(request.getHash())) {
+            userDto.setUserImage(request.getHash());
+        }
         userService.UpdateUser(userDto);
+
+        return true;
     }
 
     @Override

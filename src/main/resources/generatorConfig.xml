@@ -80,11 +80,40 @@
                              type="XMLMAPPER" />
 
 
-        <table tableName="shop">
+        <!--<table tableName="file_info">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="is_deleted" javaType="java.lang.Boolean"/>
+        </table>
+        <table tableName="file_data">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+-->
+        <!--<table tableName="order">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="is_deleted" javaType="java.lang.Integer"/>
+            <columnOverride column="order_type" javaType="java.lang.Integer"/>
+            <columnOverride column="order_state" javaType="java.lang.Integer"/>
         </table>
 
+        <table tableName="user">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="authentication_source" javaType="java.lang.Integer"/>
+            <columnOverride column="gender" javaType="java.lang.Integer"/>
+            <columnOverride column="is_deleted" javaType="java.lang.Integer"/>
+        </table>-->
+
+        <!--<table tableName="order_invitees">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="is_deleted" javaType="java.lang.Integer"/>
+            <columnOverride column="type" javaType="java.lang.Integer"/>
+            <columnOverride column="response_type" javaType="java.lang.Integer"/>
+        </table>-->
+
+        <!--<table tableName="shop">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="practice" javaType="java.lang.Boolean"/>
+            <columnOverride column="is_deleted" javaType="java.lang.Integer"/>
+        </table>-->
         <!--
 
         <table tableName="shop_label">
@@ -100,14 +129,6 @@
         <table tableName="shop_rule">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="is_cross" javaType="java.lang.Integer"/>
-            <columnOverride column="is_deleted" javaType="java.lang.Integer"/>
-        </table>
--->
-<!--
-        <table tableName="user">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="authentication_source" javaType="java.lang.Integer"/>
-            <columnOverride column="gender" javaType="java.lang.Integer"/>
             <columnOverride column="is_deleted" javaType="java.lang.Integer"/>
         </table>
 -->

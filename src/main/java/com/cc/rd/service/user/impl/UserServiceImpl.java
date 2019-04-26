@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userDto, user);
         //密码用小写 加密
         user.setPassword(MD5Utils.encodeMD5(userDto.getPassword()));
-        user.setCreationTime(DateTimeUtils.utcNow());
+        user.setCreateAt(DateTimeUtils.utcNow());
         user.setIsDeleted(0);
         userMapper.insertSelective(user);
     }
@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserService {
     public void UpdateUser(UserDto userDto) {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
+        user.setUpdateAt(DateTimeUtils.utcNow());
         userMapper.updateByPrimaryKeySelective(user);
     }
 }

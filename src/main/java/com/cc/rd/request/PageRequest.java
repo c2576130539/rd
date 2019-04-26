@@ -11,8 +11,8 @@ import lombok.Data;
 @Data
 public class PageRequest {
 
-    private Integer limit;
+    private Integer pageNum;
 
-    private Integer offset;
+    private Integer pageSize;
 }
     

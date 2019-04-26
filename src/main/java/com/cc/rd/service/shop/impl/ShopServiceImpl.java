@@ -11,7 +11,6 @@ import com.cc.rd.util.DateTimeUtils;
 import com.cc.rd.util.PageUtils;
 import com.cc.rd.validator.FastValidator;
 import com.cc.rd.vo.shop.ShopVO;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -43,8 +42,8 @@ public class ShopServiceImpl implements ShopService {
                 .notNull(request.getAdress());
         Shop shop = new Shop();
         BeanUtils.copyProperties(request, shop);
-        shop.setCreationTime(DateTimeUtils.utcNow());
-        shop.setCreatorUserId(userId);
+        shop.setCreateAt(DateTimeUtils.utcNow());
+        shop.setCreateBy(userId);
         shopMapper.insertSelective(shop);
     }
 
@@ -53,13 +52,13 @@ public class ShopServiceImpl implements ShopService {
         ShopExample example = new ShopExample();
         ShopExample.Criteria criteria = example.createCriteria();
         if (StringUtils.isEmpty(request.getName())) {
-            criteria.andNameLike('%' + request.getName() + '%');
+            criteria.andShopNameLike('%' + request.getName() + '%');
         }
         if (null != request.getAdcode()) {
-            criteria.andCityCodeEqualTo(request.getAdcode());
+            criteria.andShopAdcodeEqualTo(request.getAdcode());
         }
         if (null != request.getCityCode()) {
-            criteria.andCityCodeEqualTo(request.getCityCode());
+            criteria.andShopCityCodeEqualTo(request.getCityCode());
         }
         if (null != request.getLabelId()) {
             List<Long> shopIdList = shopLabelService.listShopId(request.getLabelId());
@@ -71,18 +70,18 @@ public class ShopServiceImpl implements ShopService {
         //默认按销量降序
         if (null != request.getNum()) {
             if (request.getNum() == 1) {
-                orderBy.append(", `num` DESC");
+                orderBy.append(", `shop_num` DESC");
             } else {
-                orderBy.append(", `num` ASC");
+                orderBy.append(", `shop_num` ASC");
             }
         } else {
-            orderBy.append(", `num` DESC");
+            orderBy.append(", `shop_num` DESC");
         }
         if (null != request.getAvgScore()) {
             if (request.getAvgScore() == 1) {
-                orderBy.append(", `avg_score` DESC");
+                orderBy.append(", `shop_avg_score` DESC");
             } else {
-                orderBy.append(", `avg_score` ASC");
+                orderBy.append(", `shop_avg_score` ASC");
             }
         }
         if (null != request.getDelivery()) {

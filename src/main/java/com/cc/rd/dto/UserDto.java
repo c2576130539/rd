@@ -10,9 +10,8 @@ import lombok.Data;
  */
 @Data
 public class UserDto {
-    private Long id;
 
-    private Integer authenticationSource;
+    private Long id;
 
     private String userName;
 
@@ -25,6 +24,14 @@ public class UserDto {
     private String password;
 
     private String emailAddress;
+
+    private String code;
+
+    private Long money;
+
+    private Integer credit;
+
+    private String userImage;
 
 }
     

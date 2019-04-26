@@ -8,9 +8,8 @@ package com.cc.rd.enums;
  */
 public enum GenderEnum {
 
-    OTHER(0, "nothing", "无"),
-    MAN(1, "man", "男人"),
-    GIRL(2, "girl", "女生");
+    GIRL(0, "girl", "女生"),
+    MAN(1, "man", "男人");
 
     private Integer code;
     private String eDesc;

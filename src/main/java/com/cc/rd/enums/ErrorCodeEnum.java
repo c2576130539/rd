@@ -24,7 +24,14 @@ public enum ErrorCodeEnum {
     SEND_CODE_LIMIT(20004, "Can not send code", "今日验证码已发三次"),
     SEND_CODE_FAILED(20005, "Sending code fail", "短信发送失败"),
     CAPTCHA_FREASH(20006, "Captcha image need to freash", "图片验证码已过期"),
-    CAPTCHA_FAILED(20007, "Code is wrong", "图片验证码错误");
+    CAPTCHA_FAILED(20007, "Code is wrong", "图片验证码错误"),
+
+    FILE_NOT_EXIST(30000, "File hash is empty", "文件不存在"),
+    FILE_DUPLICATE(30001, "Duplicate file hash in database", "文件重复"),
+    FILE_INVALID(30002,"File id is invalid", "文件Id不合法"),
+    FILE_DATA_NOT_EXIST(30003, "File data is null", "文件数据不存在"),
+    FILE_NAME_NOT_EXIST(30004, "File original name is null", "文件名不存在"),
+    FILE_SAVE_FAILED(30005, "File save failed", "文件保存失败");
 
     private Integer code;
 

@@ -5,41 +5,41 @@ public class Shop {
 
     private Long userId;
 
-    private String name;
+    private String shopName;
 
     private Boolean practice;
 
-    private Long shopRuleId;
+    private Integer shopAvgScore;
 
-    private Integer avgScore;
-
-    private Integer num;
+    private Integer shopNum;
 
     private Integer delivery;
 
-    private Integer adcode;
+    private Integer shopAdcode;
 
-    private Integer cityCode;
+    private Integer shopCityCode;
 
-    private String adress;
+    private String shopAdress;
 
-    private String phone;
+    private String shopPhone;
 
-    private Double longitude;
+    private Double shopLongitude;
 
-    private Double latitude;
+    private Double shopLatitude;
+
+    private String shopImage;
 
     private Long extendId;
 
     private String extend;
 
-    private Long lastModificationTime;
+    private Long updateAt;
 
-    private Long lastModifierUserId;
+    private Long updateBy;
 
-    private Long creationTime;
+    private Long createAt;
 
-    private Long creatorUserId;
+    private Long createBy;
 
     private Integer isDeleted;
 
@@ -59,12 +59,12 @@ public class Shop {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     public Boolean getPractice() {
@@ -75,28 +75,20 @@ public class Shop {
         this.practice = practice;
     }
 
-    public Long getShopRuleId() {
-        return shopRuleId;
+    public Integer getShopAvgScore() {
+        return shopAvgScore;
     }
 
-    public void setShopRuleId(Long shopRuleId) {
-        this.shopRuleId = shopRuleId;
+    public void setShopAvgScore(Integer shopAvgScore) {
+        this.shopAvgScore = shopAvgScore;
     }
 
-    public Integer getAvgScore() {
-        return avgScore;
+    public Integer getShopNum() {
+        return shopNum;
     }
 
-    public void setAvgScore(Integer avgScore) {
-        this.avgScore = avgScore;
-    }
-
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
+    public void setShopNum(Integer shopNum) {
+        this.shopNum = shopNum;
     }
 
     public Integer getDelivery() {
@@ -107,52 +99,60 @@ public class Shop {
         this.delivery = delivery;
     }
 
-    public Integer getAdcode() {
-        return adcode;
+    public Integer getShopAdcode() {
+        return shopAdcode;
     }
 
-    public void setAdcode(Integer adcode) {
-        this.adcode = adcode;
+    public void setShopAdcode(Integer shopAdcode) {
+        this.shopAdcode = shopAdcode;
     }
 
-    public Integer getCityCode() {
-        return cityCode;
+    public Integer getShopCityCode() {
+        return shopCityCode;
     }
 
-    public void setCityCode(Integer cityCode) {
-        this.cityCode = cityCode;
+    public void setShopCityCode(Integer shopCityCode) {
+        this.shopCityCode = shopCityCode;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getShopAdress() {
+        return shopAdress;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setShopAdress(String shopAdress) {
+        this.shopAdress = shopAdress;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getShopPhone() {
+        return shopPhone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setShopPhone(String shopPhone) {
+        this.shopPhone = shopPhone;
     }
 
-    public Double getLongitude() {
-        return longitude;
+    public Double getShopLongitude() {
+        return shopLongitude;
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
+    public void setShopLongitude(Double shopLongitude) {
+        this.shopLongitude = shopLongitude;
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public Double getShopLatitude() {
+        return shopLatitude;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
+    public void setShopLatitude(Double shopLatitude) {
+        this.shopLatitude = shopLatitude;
+    }
+
+    public String getShopImage() {
+        return shopImage;
+    }
+
+    public void setShopImage(String shopImage) {
+        this.shopImage = shopImage;
     }
 
     public Long getExtendId() {
@@ -171,36 +171,36 @@ public class Shop {
         this.extend = extend;
     }
 
-    public Long getLastModificationTime() {
-        return lastModificationTime;
+    public Long getUpdateAt() {
+        return updateAt;
     }
 
-    public void setLastModificationTime(Long lastModificationTime) {
-        this.lastModificationTime = lastModificationTime;
+    public void setUpdateAt(Long updateAt) {
+        this.updateAt = updateAt;
     }
 
-    public Long getLastModifierUserId() {
-        return lastModifierUserId;
+    public Long getUpdateBy() {
+        return updateBy;
     }
 
-    public void setLastModifierUserId(Long lastModifierUserId) {
-        this.lastModifierUserId = lastModifierUserId;
+    public void setUpdateBy(Long updateBy) {
+        this.updateBy = updateBy;
     }
 
-    public Long getCreationTime() {
-        return creationTime;
+    public Long getCreateAt() {
+        return createAt;
     }
 
-    public void setCreationTime(Long creationTime) {
-        this.creationTime = creationTime;
+    public void setCreateAt(Long createAt) {
+        this.createAt = createAt;
     }
 
-    public Long getCreatorUserId() {
-        return creatorUserId;
+    public Long getCreateBy() {
+        return createBy;
     }
 
-    public void setCreatorUserId(Long creatorUserId) {
-        this.creatorUserId = creatorUserId;
+    public void setCreateBy(Long createBy) {
+        this.createBy = createBy;
     }
 
     public Integer getIsDeleted() {
