@@ -14,25 +14,25 @@ public interface AccountService {
     /**
      * 验证手机验证码是否正确
      */
-    void isRightCode(TelphoneCodeRequest telphoneCodeRequest);
+    Boolean isRightCode(TelphoneCodeRequest telphoneCodeRequest);
 
     /**
      * 为新注册的用户发送手机验证码
      * @param telphone
      */
-    void newUserCode(String telphone);
+    Boolean newUserCode(String telphone);
 
     /**
      * 为已存在的用户发送手机验证码
      * @param telphone
      */
-    void oldUserCode(String telphone);
+    Boolean oldUserCode(String telphone);
 
     /**
      * 注册
      * @param userAddRequest
      */
-    void registerUser(UserAddRequest userAddRequest);
+    Boolean registerUser(UserAddRequest userAddRequest);
 
     /**
      * 登陆
@@ -46,20 +46,20 @@ public interface AccountService {
      * @param updatePasswordRequest
      * @param userId
      */
-    void updatePassword(UpdatePasswordRequest updatePasswordRequest, Long userId);
+    Boolean updatePassword(UpdatePasswordRequest updatePasswordRequest, Long userId);
 
     /**
      * 找回密码
      * @param resetPasswordRequest
      */
-    void resetPassword(ResetPasswordRequest resetPasswordRequest);
+    Boolean resetPassword(ResetPasswordRequest resetPasswordRequest);
 
     /**
      * 更换手机号码
      * @param telphoneCodeRequest
      * @param userId
      */
-    void resetTelphone(TelphoneCodeRequest telphoneCodeRequest, Long userId);
+    Boolean resetTelphone(TelphoneCodeRequest telphoneCodeRequest, Long userId);
 
     /**
      * 更新用户信息
@@ -73,6 +73,6 @@ public interface AccountService {
      * 解锁
      * @param telphone
      */
-    void deleteByTel(String telphone);
+    Boolean deleteByTel(String telphone);
 
 }

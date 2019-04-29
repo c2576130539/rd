@@ -65,7 +65,7 @@ public class AccountServiceImpl implements AccountService {
      *验证验手机证码是否正确
      */
     @Override
-    public void isRightCode(TelphoneCodeRequest telphoneCodeRequest) {
+    public Boolean isRightCode(TelphoneCodeRequest telphoneCodeRequest) {
         String telphone = telphoneCodeRequest.getTelphone();
         String code = telphoneCodeRequest.getCode();
         FastValidator.start().regTelphone(telphone)
@@ -75,26 +75,29 @@ public class AccountServiceImpl implements AccountService {
         if (!code.toLowerCase().equals(smsCode)) {
             throw new ManagerException(ErrorCodeEnum.TELPHONE_CODE_ERROR);
         }
+        return true;
     }
 
     @Override
-    public void newUserCode(String telphone) {
+    public Boolean newUserCode(String telphone) {
         //用户不存在
         bizValidator.isExistUser(null, telphone, null);
         //发送短信注册码
         sendTelCode(telphone);
+        return true;
     }
 
     @Override
-    public void oldUserCode(String telphone) {
+    public Boolean oldUserCode(String telphone) {
         //用户存在
         isExistUser(null, telphone, null);
         //发送短信注册码
         sendTelCode(telphone);
+        return true;
     }
 
     @Override
-    public void registerUser(UserAddRequest userAddRequest) {
+    public Boolean registerUser(UserAddRequest userAddRequest) {
         FastValidator.start().on(userAddRequest.getPassword(), 8, 16);
         //账号不存在
         bizValidator.isExistUser(null, userAddRequest.getTelphone(), null);
@@ -107,6 +110,7 @@ public class AccountServiceImpl implements AccountService {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userAddRequest, userDto);
         userService.addUser(userDto);
+        return true;
     }
 
     @Override
@@ -185,7 +189,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updatePassword(UpdatePasswordRequest updatePasswordRequest, Long userId) {
+    public Boolean updatePassword(UpdatePasswordRequest updatePasswordRequest, Long userId) {
         FastValidator.start().notNull(updatePasswordRequest.getOldPassword())
                 .on(updatePasswordRequest.getNewPassword(), 8, 16);
         //两次密码是否一致
@@ -198,10 +202,11 @@ public class AccountServiceImpl implements AccountService {
         userDto.setId(userId);
         userDto.setPassword(updatePasswordRequest.getNewPassword().toLowerCase());
         userService.UpdateUser(userDto);
+        return true;
     }
 
     @Override
-    public void resetPassword(ResetPasswordRequest resetPasswordRequest) {
+    public Boolean resetPassword(ResetPasswordRequest resetPasswordRequest) {
         FastValidator.start().on(resetPasswordRequest.getNewPassword(), 8 , 16)
                 .notNull(resetPasswordRequest.getTelphone())
                 .notNull(resetPasswordRequest.getCode());
@@ -217,10 +222,11 @@ public class AccountServiceImpl implements AccountService {
         userDto.setId(user.getId());
         userDto.setPassword(resetPasswordRequest.getNewPassword());
         userService.UpdateUser(userDto);
+        return true;
     }
 
     @Override
-    public void resetTelphone(TelphoneCodeRequest telphoneCodeRequest, Long userId) {
+    public Boolean resetTelphone(TelphoneCodeRequest telphoneCodeRequest, Long userId) {
         //存在该手机号码用户报错
         bizValidator.isExistUser(null, telphoneCodeRequest.getTelphone(), null);
         //手机验证码是否一致
@@ -230,6 +236,7 @@ public class AccountServiceImpl implements AccountService {
         userDto.setId(userId);
         userDto.setPassword(telphoneCodeRequest.getTelphone());
         userService.UpdateUser(userDto);
+        return true;
     }
 
     @Override
@@ -246,8 +253,8 @@ public class AccountServiceImpl implements AccountService {
         if (null != request.getGender()) {
             userDto.setGender(request.getGender());
         }
-        if (!StringUtils.isEmpty(request.getHash())) {
-            userDto.setUserImage(request.getHash());
+        if (!StringUtils.isEmpty(request.getUserImage())) {
+            userDto.setUserImage(request.getUserImage());
         }
         userService.UpdateUser(userDto);
 
@@ -255,13 +262,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deleteByTel(String telphone) {
+    public Boolean deleteByTel(String telphone) {
         String cacheKey = getCacheKey(telphone, Constant.ERROR_NUM);
         try {
             redisTemplate.delete(cacheKey);
         } catch (Exception e) {
             throw new ManagerException(ErrorCodeEnum.USER_LOCK);
         }
+        return true;
     }
 
     private String getCacheKey(String telphone, String type) {

@@ -3,6 +3,8 @@ package com.cc.rd.request.shop;
 import com.cc.rd.request.UserLocationRequest;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @program: ShopSearchRequest
  * @description: 搜索店家
@@ -12,18 +14,27 @@ import lombok.Data;
 @Data
 public class ShopSearchRequest extends UserLocationRequest {
 
-    private String name;
+    private String shopName;
 
-    private Long labelId;
+    private List<Long> labelIdList;
 
-    private Integer adcode;
+    private Integer shopAdcode;
 
-    private Integer cityCode;
-    //评分0降序，1升序
-    private Integer avgScore;
-    //人气0降序，1升序
-    private Integer num;
-    //配送费0升序，1降序
+    private Integer shopCityCode;
+
+    /**
+     * 评分0降序，1升序
+     */
+    private Integer shopAvgScore;
+
+    /**
+     * 人气0降序，1升序
+     */
+    private Integer shopNum;
+
+    /**
+     * 配送费0升序，1降序
+     */
     private Integer delivery;
 
     private Integer pageNum = 0;

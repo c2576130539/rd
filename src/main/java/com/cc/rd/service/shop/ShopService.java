@@ -19,7 +19,7 @@ public interface ShopService {
      * @param request
      * @param userId
      */
-    void addShop(ShopAddRequest request, Long userId);
+    Boolean addShop(ShopAddRequest request, Long userId);
 
     /**
      * 搜索商店

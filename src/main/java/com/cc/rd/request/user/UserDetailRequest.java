@@ -20,6 +20,6 @@ public class UserDetailRequest {
     /**
      * 头像
      */
-    private String hash;
+    private String userImage;
 }
     

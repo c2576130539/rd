@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cc.rd.dao.ShopLabelCustomMapper">
+
+    <resultMap id="ShopLabelResultMap" type="com.cc.rd.dto.shop.ShopLabelDTO">
+        <id column="shop_id" jdbcType="BIGINT" property="shopId" />
+        <collection property="labelList" ofType="com.cc.rd.dto.shop.LabelDTO" >
+            <result column="label_id" jdbcType="BIGINT" property="labelId" />
+            <result column="content" jdbcType="VARCHAR" property="labelName" />
+        </collection>
+    </resultMap>
+
+    <select id="insertBatch">
+        INSERT INTO shop_label
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            shop_id,
+            label_id,
+        </trim>
+        VALUE
+        <foreach collection="labelIdList" item="labelId" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{shopId},
+                #{labelId},
+            </trim>
+        </foreach>
+    </select>
+
+    <select id="getLabelByShopId" resultType="com.cc.rd.dto.shop.LabelDTO">
+        SELECT l.id labelId, l.content labelName
+        FROM label l
+        INNER JOIN
+        (
+        SELECT label_id
+        FROM shop_label
+        WHERE shop_id = id AND is_deleted = 0
+        ) AS s
+        ON s.label_id = l.id
+        WHERE l.is_deleted = 0
+        ORDER BY l.num DESC
+    </select>
+
+    <select id="getLabelByShopIdList" resultMap="ShopLabelResultMap">
+        SELECT s.shop_id, l.id, l.content
+        FROM label l
+        INNER JOIN
+        (
+        SELECT id, content
+        FROM label
+        WHERE is_deleted = 0
+        <if test="null != shopIdList and shopIdList.size() > 0" >
+            AND
+            <foreach collection="shopIdList" item="shopId" open="(" separator="," close="," >
+                #{shopId}
+            </foreach>
+        </if>
+        ) AS s
+        ON s.label_id = l.id
+        WHERE s.is_deleted = 0
+    </select>
+</mapper>

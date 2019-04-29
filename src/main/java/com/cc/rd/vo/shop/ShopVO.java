@@ -2,6 +2,8 @@ package com.cc.rd.vo.shop;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @program: ShopVO
  * @description: 店铺信息
@@ -11,24 +13,35 @@ import lombok.Data;
 @Data
 public class ShopVO {
 
-    private Long id;
+    private Long shopId;
 
-    private String name;
+    private Long userId;
+
+    private String shopName;
 
     private Boolean practice;
 
-    private String shopRuleId;
+    private Integer shopAvgScore;
 
-    private Integer avgScore;
-
-    private Integer num;
+    private Integer shopNum;
 
     private Integer delivery;
 
-    private String adress;
+    private Integer shopAdcode;
 
-    private Double longitude;
+    private Integer shopCityCode;
 
-    private Double latitude;
+    private String shopAdress;
+
+    private String shopPhone;
+
+    private Double shopLongitude;
+
+    private Double shopLatitude;
+
+    private String shopImage;
+
+    private List<String> labelNaem;
+
 }
     

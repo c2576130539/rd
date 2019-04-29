@@ -2,7 +2,9 @@ package com.cc.rd.controller.shop;
 
 import com.cc.rd.controller.BaseController;
 import com.cc.rd.request.shop.ShopAddRequest;
+import com.cc.rd.request.shop.ShopLabelAddRequest;
 import com.cc.rd.request.shop.ShopSearchRequest;
+import com.cc.rd.service.shop.ShopLabelService;
 import com.cc.rd.service.shop.ShopService;
 import com.cc.rd.util.JSONResult;
 import io.swagger.annotations.Api;
@@ -25,17 +27,25 @@ public class ShopController extends BaseController {
     @Autowired
     private ShopService shopService;
 
+    @Autowired
+    private ShopLabelService shopLabelService;
+
     @ApiOperation(value = "添加商店")
     @PostMapping("/shops")
-    public JSONResult addShop(@RequestBody  ShopAddRequest request) {
-        shopService.addShop(request, Long.valueOf(getUserId()));
-        return JSONResult.success();
+    public JSONResult addShop(@RequestBody ShopAddRequest request) {
+        return JSONResult.success(shopService.addShop(request, Long.valueOf(getUserId())));
     }
 
     @ApiOperation(value = "搜索商店")
     @PostMapping("/shops/search")
     public JSONResult searchShop(@RequestBody ShopSearchRequest request) {
         return JSONResult.success(shopService.listShopSearch(request));
+    }
+
+    @ApiOperation(value = "添加商店标签")
+    @PostMapping("/shops/labels")
+    public JSONResult addShopLabel(@RequestBody ShopLabelAddRequest request) {
+        return JSONResult.success(shopLabelService.addShopLabel(request));
     }
 
 }

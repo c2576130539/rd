@@ -31,7 +31,9 @@ public enum ErrorCodeEnum {
     FILE_INVALID(30002,"File id is invalid", "文件Id不合法"),
     FILE_DATA_NOT_EXIST(30003, "File data is null", "文件数据不存在"),
     FILE_NAME_NOT_EXIST(30004, "File original name is null", "文件名不存在"),
-    FILE_SAVE_FAILED(30005, "File save failed", "文件保存失败");
+    FILE_SAVE_FAILED(30005, "File save failed", "文件保存失败"),
+
+    LABEL_NAME_EXIST(61010, "Label name exist", "标签名已经存在");
 
     private Integer code;
 

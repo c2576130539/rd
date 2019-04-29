@@ -2,6 +2,8 @@ package com.cc.rd.request.shop;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @program: ShopAddRequest
  * @description: 添加店铺
@@ -11,22 +13,26 @@ import lombok.Data;
 @Data
 public class ShopAddRequest {
 
-    private String userId;
+    private Long userId;
 
-    private String name;
+    private String shopName;
 
-    private Integer practice;
+    private Boolean practice;
 
-    private Integer adcode;
+    private Integer shopAdcode;
 
-    private Integer cityCode;
+    private Integer shopCityCode;
 
-    private String adress;
+    private String shopAdress;
 
-    private String phone;
+    private String shopPhone;
 
-    private Double longitude;
+    private Double shopLongitude;
 
-    private Double latitude;
+    private Double shopLatitude;
+
+    private String shopImage;
+
+    private List<Long> labelIdList;
 }
     

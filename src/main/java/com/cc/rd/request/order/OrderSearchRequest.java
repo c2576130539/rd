@@ -12,19 +12,37 @@ import lombok.Data;
 @Data
 public class OrderSearchRequest extends PageRequest {
 
-    private Integer number;
+    /**
+     * 人数上限
+     */
+    private Integer orderNum;
 
-    private String title;
+    /**
+     * 活动主题
+     */
+    private String orderTitle;
 
-    private Long starts;
+    /**
+     * 开始时间
+     */
+    private Long orderStarts;
 
-    private Long ends;
+    /**
+     * 结束时间
+     */
+    private Long orderEnds;
 
     private Long shopId;
 
-    private Integer adcode;
+    /**
+     * 城市
+     */
+    private Integer orderAdcode;
 
-    private Integer cityCode;
+    /**
+     * 区
+     */
+    private Integer orderCityCode;
 
     private String address;
 }

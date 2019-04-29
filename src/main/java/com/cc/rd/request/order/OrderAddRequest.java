@@ -12,31 +12,31 @@ import java.util.List;
  * @create: 2019-03-29 13:23
  */
 @Data
-public class OrderAddRequest extends PageRequest {
+public class OrderAddRequest {
     /**
      * 活动主题
      */
-    private String title;
+    private String orderTitle;
 
     /**
      * 活动内容
      */
-    private String content;
+    private String orderContent;
 
     /**
      * 开始时间
      */
-    private Long starts;
+    private Long orderStarts;
 
     /**
      * 结束时间
      */
-    private Long ends;
+    private Long orderEnds;
 
     /**
      * 是否公开
      */
-    private Integer type;
+    private Integer orderType;
 
     /**
      * 店家
@@ -46,18 +46,18 @@ public class OrderAddRequest extends PageRequest {
     /**
      * 人数上限
      */
-    private Integer number;
+    private Integer orderNum;
 
     /**
      * 城市
      */
-    private Integer adcode;
+    private Integer orderAdcode;
 
     /**
      * 区
      */
-    private Integer cityCode;
+    private Integer orderCityCode;
 
-    private String address;
+    private String orderAddress;
 }
     

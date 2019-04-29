@@ -62,11 +62,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void addOrder(OrderAddRequest request, Long userId) {
-        FastValidator.start().notNull(request.getTitle(), "title")
-                .numNotNull(request.getStarts(), "statTime")
-                .numNotNull(request.getEnds(), "endTime")
-                .numNotNull(request.getAdcode(), "city")
-                .numNotNull(request.getCityCode(), "area");
+        FastValidator.start().notNull(request.getOrderTitle(), "title")
+                .numNotNull(request.getOrderStarts(), "statTime")
+                .numNotNull(request.getOrderEnds(), "endTime")
+                .numNotNull(request.getOrderAdcode(), "city")
+                .numNotNull(request.getOrderCityCode(), "area");
         Order order = new Order();
     }
 
