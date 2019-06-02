@@ -58,8 +58,8 @@ public class FileController extends BaseController {
      */
     @ApiOperation("下载文件")
     @GetMapping("/files/{fileName:.+}")
-    public ResponseEntity download(@PathVariable("fileName") String fileName, String deviceId) {
-        logger.info("FILE|download|{}|{}", fileName, deviceId);
+    public ResponseEntity download(@PathVariable("fileName") String fileName) {
+        logger.info("FILE|download|{}", fileName);
         if (StringUtils.isEmpty(fileName)) {
             throw new ManagerException(ErrorCodeEnum.FILE_NAME_NOT_EXIST);
         }

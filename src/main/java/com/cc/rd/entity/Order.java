@@ -1,11 +1,13 @@
 package com.cc.rd.entity;
 
 public class Order {
-    private String id;
+    private Long id;
 
     private Integer orderNum;
 
     private String orderTitle;
+
+    private String orderContent;
 
     private Long orderStarts;
 
@@ -21,6 +23,10 @@ public class Order {
 
     private Integer orderCityCode;
 
+    private Double orderLongitude;
+
+    private Double orderLatitude;
+
     private String orderAddress;
 
     private String externalId;
@@ -35,13 +41,11 @@ public class Order {
 
     private Integer isDeleted;
 
-    private String orderContent;
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,6 +63,14 @@ public class Order {
 
     public void setOrderTitle(String orderTitle) {
         this.orderTitle = orderTitle;
+    }
+
+    public String getOrderContent() {
+        return orderContent;
+    }
+
+    public void setOrderContent(String orderContent) {
+        this.orderContent = orderContent;
     }
 
     public Long getOrderStarts() {
@@ -117,6 +129,22 @@ public class Order {
         this.orderCityCode = orderCityCode;
     }
 
+    public Double getOrderLongitude() {
+        return orderLongitude;
+    }
+
+    public void setOrderLongitude(Double orderLongitude) {
+        this.orderLongitude = orderLongitude;
+    }
+
+    public Double getOrderLatitude() {
+        return orderLatitude;
+    }
+
+    public void setOrderLatitude(Double orderLatitude) {
+        this.orderLatitude = orderLatitude;
+    }
+
     public String getOrderAddress() {
         return orderAddress;
     }
@@ -171,13 +199,5 @@ public class Order {
 
     public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
-    }
-
-    public String getOrderContent() {
-        return orderContent;
-    }
-
-    public void setOrderContent(String orderContent) {
-        this.orderContent = orderContent;
     }
 }

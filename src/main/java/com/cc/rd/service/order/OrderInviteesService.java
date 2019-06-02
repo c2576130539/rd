@@ -7,4 +7,6 @@ package com.cc.rd.service.order;
  * @create: 2019-03-29 13:18
  */
 public interface OrderInviteesService {
+
+    void addInvitees(Long userId, String orderId);
 }

@@ -2,6 +2,7 @@ package com.cc.rd.util;
 
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Objects;
  * @author: cchen
  * @create: 2019-03-05 15:18
  */
-public class JSONResult {
+public class JSONResult implements Serializable {
 
     private int code;
     private boolean success;

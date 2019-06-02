@@ -19,9 +19,9 @@ public class UserLoginVo {
 
     private String telphone;
 
-    private Long money;
+    private String money;
 
-    private Integer credit;
+    private String credit;
 
     private String userImage;
 

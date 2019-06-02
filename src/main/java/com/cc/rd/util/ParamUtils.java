@@ -1,5 +1,7 @@
 package com.cc.rd.util;
 
+import java.util.Objects;
+
 /**
  * @program: ParamUtils
  * @description: 校验数据
@@ -62,6 +64,40 @@ public class ParamUtils {
      */
     public static boolean isLegalId(Number n) {
         return isGt0(n);
+    }
+
+    /**
+     * 添加验证元素(包含最大小值)
+     *
+     * @param target
+     * @param min
+     * @param max
+     * @return
+     */
+    public static boolean isRightLength(Object target, int min, int max) {
+        if (null == target) {
+            return false;
+        }
+        if (target instanceof Integer) {
+            int num = (int) target;
+            if (num < min || num > max) {
+                return false;
+            }
+        } else if (target instanceof Long) {
+            long num = (long) target;
+            if (num < min || num > max) {
+                return false;
+            }
+        } else if (target instanceof String) {
+            String s = (String) target;
+            int num = s.length();
+            if (num < min || num > max) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
     }
 }
     

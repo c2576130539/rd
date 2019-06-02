@@ -1,20 +1,21 @@
-package com.cc.rd.config;
+package com.cc.rd.config.redisson;
 
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.StringCodec;
 import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-/**
- * @program: ClusterRedissonConfig
- * @description: 集群redis
- * @author: cchen
- * @create: 2019-03-02 11:32
- */
+@Slf4j
+@Configuration
+@ConditionalOnProperty("redis_hosts")
 public class ClusterRedissonConfig {
 
-    @Value("localhost:7000,localhost:7001,localhost:7002")
+    @Value("${redis_hosts:localhost:7000,localhost:7001,localhost:7002}")
     private String redisHosts;
 
     @Value("${redis_pass:}")
@@ -23,9 +24,10 @@ public class ClusterRedissonConfig {
     @Bean
     public Config config() {
         Config config = new Config();
+        config.setCodec(StringCodec.INSTANCE);
         String[] hosts = redisHosts.split(",");
 
-        for (int i=0; i<hosts.length; i++) {
+        for (int i = 0; i < hosts.length; i++) {
             hosts[i] = "redis://" + hosts[i];
         }
 
@@ -44,7 +46,7 @@ public class ClusterRedissonConfig {
 
     @Bean
     public RedissonClient redissonClient() {
-        return Redisson.create(config()) ;
+        log.info("========================Redisson 集群模式=========================");
+        return Redisson.create(config());
     }
 }
-    

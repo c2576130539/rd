@@ -15,11 +15,15 @@ import com.cc.rd.service.user.LogOutService;
 import com.cc.rd.service.user.UserService;
 import com.cc.rd.util.DateTimeUtils;
 import com.cc.rd.util.JwtUtils;
+import com.cc.rd.util.ParamUtils;
 import com.cc.rd.util.RandomUtils;
 import com.cc.rd.validator.BizValidator;
 import com.cc.rd.validator.FastValidator;
 import com.cc.rd.vo.user.UserLoginVo;
+import com.google.common.util.concurrent.RateLimiter;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -61,6 +65,25 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private LogOutService logOutService;
 
+    @Autowired
+    private RedissonClient redissonClient;
+
+    // 登陆限流
+    private RateLimiter loginLimiter = RateLimiter.create(2);
+
+    @Override
+    public UserLoginVo getLoginUser(Long userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        UserLoginVo userLoginVo = new UserLoginVo();
+        userLoginVo.setTelphone(user.getTelphone());
+        userLoginVo.setCredit(user.getCredit().toString());
+        userLoginVo.setGender(GenderEnum.findByCode(user.getGender()).geteDesc());
+        userLoginVo.setMoney(String.format("%.2f", Double.valueOf(user.getMoney())));
+        userLoginVo.setNickName(user.getNickName());
+        userLoginVo.setUserImage(user.getUserImage());
+        return userLoginVo;
+    }
+
     /*
      *验证验手机证码是否正确
      */
@@ -98,18 +121,31 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Boolean registerUser(UserAddRequest userAddRequest) {
-        FastValidator.start().on(userAddRequest.getPassword(), 8, 16);
-        //账号不存在
-        bizValidator.isExistUser(null, userAddRequest.getTelphone(), null);
-        //手机验证码是否一致
-        TelphoneCodeRequest telphoneCodeRequest = new TelphoneCodeRequest(userAddRequest.getTelphone(), userAddRequest.getCode());
-        isRightCode(telphoneCodeRequest);
-        //两次密码是否一致
-        isRightPassword(userAddRequest.getPassword(), userAddRequest.getConfirmPassword());
+        if (!ParamUtils.isRightLength(userAddRequest.getPassword(), Constant.MIN_PWD, Constant.MAX_PWD)) {
+            throw new ManagerException(ErrorCodeEnum.USER_PASSWORD_RULE);
+        }
 
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(userAddRequest, userDto);
-        userService.addUser(userDto);
+        RLock lock = redissonClient.getLock("user_" + userAddRequest.getTelphone() + "_register_event");
+        try {
+            //尝试加锁，最多等待10秒，上锁以后100秒自动解锁
+            boolean result = lock.tryLock(10, 100, TimeUnit.SECONDS);
+            if (result) {
+                //账号是否存在，存在报错
+                bizValidator.isExistUser(null, userAddRequest.getTelphone(), null);
+                //手机验证码是否一致
+                TelphoneCodeRequest telphoneCodeRequest =
+                        new TelphoneCodeRequest(userAddRequest.getTelphone(), userAddRequest.getCode());
+                isRightCode(telphoneCodeRequest);
+                //两次密码是否一致
+                isRightPassword(userAddRequest.getPassword(), userAddRequest.getConfirmPassword());
+
+                UserDto userDto = new UserDto();
+                BeanUtils.copyProperties(userAddRequest, userDto);
+                userService.addUser(userDto);
+            }
+        } catch (InterruptedException e) {
+            throw new ManagerException(ErrorCodeEnum.USER_EXIST);
+        }
         return true;
     }
 
@@ -128,6 +164,14 @@ public class AccountServiceImpl implements AccountService {
         if (num >= Constant.PASSWORD_ERROR_NUMBER) {
             throw new ManagerException(ErrorCodeEnum.USER_LOCK);
         }
+        // 限流
+        try {
+            if (!loginLimiter.tryAcquire()) {
+                throw new ManagerException(ErrorCodeEnum.USER_LOCK);
+            }
+        } catch (Exception ex) {
+            logger.error("Login|Limiter|{}", userLoginRequest.getTelphone(), ex);
+        }
         //图片验证码
         String code = userLoginRequest.getCode();
         //验证码防爆破
@@ -138,7 +182,8 @@ public class AccountServiceImpl implements AccountService {
             }
             //相同用户相同验证码打标，2分钟内防重放
             try {
-                redisTemplate.opsForValue().set(getCacheKey(telphone, code), ""+ DateTimeUtils.utcNow(), 2, TimeUnit.MINUTES);
+                redisTemplate.opsForValue().set(getCacheKey(telphone, code),
+                        ""+ DateTimeUtils.utcNow(), 2, TimeUnit.MINUTES);
             } catch (Exception e) {
                 //放行
                 logger.error("验证码打标异常, telphone={}", telphone, e);
@@ -148,10 +193,10 @@ public class AccountServiceImpl implements AccountService {
         if (num > 0 || !StringUtils.isEmpty(code)) {
             captchaService.checkCode(userLoginRequest.getToken(), code);
         }
-        //账号是否存在
+        //账号是否存在,不存在报错
         User user = isExistUser(null, telphone, null);
         //校验密码是否一致
-        if (!user.getPassword().equals(userLoginRequest.getPassword().toLowerCase())) {
+        if (!user.getPassword().equals(userLoginRequest.getPassword())) {
             //记录错误次数
             num++;
             //五分钟内错误五次，锁定账号一天
@@ -176,8 +221,8 @@ public class AccountServiceImpl implements AccountService {
             userLoginVo.setTelphone(telphone);
             userLoginVo.setNickName(StringUtils.isEmpty(user.getNickName())? Constant.USER_NAME:user.getNickName());
             userLoginVo.setGender(GenderEnum.findByCode(user.getGender()).geteDesc());
-            userLoginVo.setMoney(user.getMoney());
-            userLoginVo.setCredit(user.getCredit());
+            userLoginVo.setMoney(String.format("%.2f", Double.valueOf(user.getMoney())));
+            userLoginVo.setCredit(user.getCredit().toString());
             userLoginVo.setUserImage(user.getUserImage());
 
             logOutService.clearLogoutStatus(user.getId().toString());
@@ -280,7 +325,7 @@ public class AccountServiceImpl implements AccountService {
      *验证密码是否正确
      */
     private void  isRightPassword(String pwd, String inputPwd) {
-        if (!pwd.toLowerCase().equals(inputPwd.toLowerCase())) {
+        if (!pwd.equals(inputPwd)) {
             throw new ManagerException(ErrorCodeEnum.USER_PASSWORD_ERROR);
         }
     }
@@ -330,14 +375,11 @@ public class AccountServiceImpl implements AccountService {
                 if (num == Constant.SEND_CODE_NUMBER) {
                     redisTemplate.opsForValue().set(cacheKey, num.toString());
                     redisTemplate.expire(cacheKey, 24, TimeUnit.HOURS);
-                } else {
-                    redisTemplate.opsForValue().set(cacheKey, num.toString());
-                    redisTemplate.expire(cacheKey, 1, TimeUnit.HOURS);
                 }
                 //保存验证码
                 String codeKey = getCacheKey(telphone, "code");
                 redisTemplate.opsForValue().set(codeKey, code.toLowerCase());
-                redisTemplate.expire(cacheKey, 5, TimeUnit.MINUTES);
+                redisTemplate.expire(cacheKey, 5, TimeUnit.HOURS);
             }else{
                 throw new ManagerException(ErrorCodeEnum.SEND_CODE_FAILED);
             }

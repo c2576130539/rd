@@ -27,7 +27,8 @@ public class CopyCrossDomainHeaderFilter extends OncePerRequestFilter{
     private final static String HEADERS_CROSS_DOMAIN = "Access-Control-Allow-Origin";
 
     @Override
-    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp,
+                                    FilterChain filterChain) throws ServletException, IOException {
         String reqHeaderOrigin = req.getHeader(HEADERS_ORIGIN);
 
         if (StringUtils.isNotEmpty(reqHeaderOrigin)) {

@@ -12,6 +12,13 @@ import com.cc.rd.vo.user.UserLoginVo;
 public interface AccountService {
 
     /**
+     * 获取当前用户登陆信息
+     * @param userId
+     * @return
+     */
+    UserLoginVo getLoginUser(Long userId);
+
+    /**
      * 验证手机验证码是否正确
      */
     Boolean isRightCode(TelphoneCodeRequest telphoneCodeRequest);

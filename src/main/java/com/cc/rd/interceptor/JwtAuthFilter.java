@@ -11,6 +11,8 @@ import com.cc.rd.util.JwtUtils;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -44,6 +46,9 @@ import java.util.Map;
 @Order(1)
 public class JwtAuthFilter extends OncePerRequestFilter {
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthFilter.class);
+
+
     private final static List<RequestMatcher> antRequestMatchers = Lists.newArrayList();
 
     @Autowired
@@ -57,7 +62,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 "/swagger-resources/**",
                 "/swagger-ui.html",
                 "/v2/api-docs",
-                "/error"
+                "/error",
+                "/files/**"
         };
 
         antRequestMatchers.add(new AntPathRequestMatcher("**", "OPTIONS"));
@@ -126,7 +132,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = httpServletRequest.getHeader("Authorization");
 
         if (StringUtils.isEmpty(token)) {
-            log.error("token validate failed, no auth info in http header");
+            logger.error("token validate failed, no auth info in http header");
             setNoAuth(httpServletResponse);
             return;
         }
@@ -134,7 +140,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String[] codes = token.split("\\.");
 
         if (codes.length < 2) {
-            log.error("token validate failed, format error");
+            logger.error("token validate failed, format error");
             setNoAuth(httpServletResponse);
             return;
         }
@@ -160,7 +166,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             // 查看之前是否已经登出
             if (logOutService.isLoggedOut(userId)) {
-                log.error("已经登出的用户, userName={}", userId);
+                logger.error("已经登出的用户, userName={}", userId);
                 setNoAuth(httpServletResponse);
                 return;
             }
@@ -169,7 +175,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             // load user detail into authenticate
             SecurityContextHolder.getContext().setAuthentication(new IgnoredAuthenticationToken());
         } catch (Exception ex) {
-            log.error("JWT验证失败 {}", token, ex);
+            logger.error("JWT验证失败 {}", token, ex);
             setNoAuth(httpServletResponse);
             return;
         }

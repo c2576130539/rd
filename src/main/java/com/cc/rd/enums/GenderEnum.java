@@ -1,5 +1,8 @@
 package com.cc.rd.enums;
 
+import jodd.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @program: GenderEnum
  * @description: 性别

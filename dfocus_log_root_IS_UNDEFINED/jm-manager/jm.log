@@ -1,0 +1,5 @@
+2019-05-30 06:30:02.637 WARN  com.zaxxer.hikari.pool.HikariPool - CC_CONNECTION_POOL - Thread starvation or clock leap detected (housekeeper delta=11h34m45s932ms).
+2019-05-30 08:30:14.489 WARN  com.zaxxer.hikari.pool.HikariPool - CC_CONNECTION_POOL - Thread starvation or clock leap detected (housekeeper delta=2h12s38ms).
+2019-05-30 11:42:37.012 WARN  com.zaxxer.hikari.pool.HikariPool - CC_CONNECTION_POOL - Thread starvation or clock leap detected (housekeeper delta=2h22m21s848ms).
+2019-05-30 11:43:03.392 WARN  com.zaxxer.hikari.pool.HikariPool - CC_CONNECTION_POOL - Retrograde clock change detected (housekeeper delta=26s380ms), soft-evicting connections from pool.
+2019-05-30 11:43:29.671 INFO  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6aba2b86: startup date [Sun May 26 13:30:32 CST 2019]; root of context hierarchy

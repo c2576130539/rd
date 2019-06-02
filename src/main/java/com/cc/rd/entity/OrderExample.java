@@ -114,62 +114,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(String value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(String value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(String value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(String value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(String value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(String value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLike(String value) {
-            addCriterion("id like", value, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdNotLike(String value) {
-            addCriterion("id not like", value, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdIn(List<String> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<String> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(String value1, String value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(String value1, String value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -301,6 +291,76 @@ public class OrderExample {
 
         public Criteria andOrderTitleNotBetween(String value1, String value2) {
             addCriterion("order_title not between", value1, value2, "orderTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentIsNull() {
+            addCriterion("order_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentIsNotNull() {
+            addCriterion("order_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentEqualTo(String value) {
+            addCriterion("order_content =", value, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentNotEqualTo(String value) {
+            addCriterion("order_content <>", value, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentGreaterThan(String value) {
+            addCriterion("order_content >", value, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentGreaterThanOrEqualTo(String value) {
+            addCriterion("order_content >=", value, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentLessThan(String value) {
+            addCriterion("order_content <", value, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentLessThanOrEqualTo(String value) {
+            addCriterion("order_content <=", value, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentLike(String value) {
+            addCriterion("order_content like", value, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentNotLike(String value) {
+            addCriterion("order_content not like", value, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentIn(List<String> values) {
+            addCriterion("order_content in", values, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentNotIn(List<String> values) {
+            addCriterion("order_content not in", values, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentBetween(String value1, String value2) {
+            addCriterion("order_content between", value1, value2, "orderContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderContentNotBetween(String value1, String value2) {
+            addCriterion("order_content not between", value1, value2, "orderContent");
             return (Criteria) this;
         }
 
@@ -721,6 +781,126 @@ public class OrderExample {
 
         public Criteria andOrderCityCodeNotBetween(Integer value1, Integer value2) {
             addCriterion("order_city_code not between", value1, value2, "orderCityCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeIsNull() {
+            addCriterion("order_longitude is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeIsNotNull() {
+            addCriterion("order_longitude is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeEqualTo(Double value) {
+            addCriterion("order_longitude =", value, "orderLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeNotEqualTo(Double value) {
+            addCriterion("order_longitude <>", value, "orderLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeGreaterThan(Double value) {
+            addCriterion("order_longitude >", value, "orderLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeGreaterThanOrEqualTo(Double value) {
+            addCriterion("order_longitude >=", value, "orderLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeLessThan(Double value) {
+            addCriterion("order_longitude <", value, "orderLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeLessThanOrEqualTo(Double value) {
+            addCriterion("order_longitude <=", value, "orderLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeIn(List<Double> values) {
+            addCriterion("order_longitude in", values, "orderLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeNotIn(List<Double> values) {
+            addCriterion("order_longitude not in", values, "orderLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeBetween(Double value1, Double value2) {
+            addCriterion("order_longitude between", value1, value2, "orderLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLongitudeNotBetween(Double value1, Double value2) {
+            addCriterion("order_longitude not between", value1, value2, "orderLongitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeIsNull() {
+            addCriterion("order_latitude is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeIsNotNull() {
+            addCriterion("order_latitude is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeEqualTo(Double value) {
+            addCriterion("order_latitude =", value, "orderLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeNotEqualTo(Double value) {
+            addCriterion("order_latitude <>", value, "orderLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeGreaterThan(Double value) {
+            addCriterion("order_latitude >", value, "orderLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeGreaterThanOrEqualTo(Double value) {
+            addCriterion("order_latitude >=", value, "orderLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeLessThan(Double value) {
+            addCriterion("order_latitude <", value, "orderLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeLessThanOrEqualTo(Double value) {
+            addCriterion("order_latitude <=", value, "orderLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeIn(List<Double> values) {
+            addCriterion("order_latitude in", values, "orderLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeNotIn(List<Double> values) {
+            addCriterion("order_latitude not in", values, "orderLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeBetween(Double value1, Double value2) {
+            addCriterion("order_latitude between", value1, value2, "orderLatitude");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderLatitudeNotBetween(Double value1, Double value2) {
+            addCriterion("order_latitude not between", value1, value2, "orderLatitude");
             return (Criteria) this;
         }
 

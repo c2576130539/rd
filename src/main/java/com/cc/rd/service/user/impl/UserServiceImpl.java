@@ -7,6 +7,7 @@ import com.cc.rd.entity.UserExample;
 import com.cc.rd.service.user.UserService;
 import com.cc.rd.util.DateTimeUtils;
 import com.cc.rd.util.MD5Utils;
+import jodd.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public void addUser(UserDto userDto) {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
-        //密码用小写 加密
+        //加密
         user.setPassword(MD5Utils.encodeMD5(userDto.getPassword()));
         user.setCreateAt(DateTimeUtils.utcNow());
         user.setIsDeleted(0);

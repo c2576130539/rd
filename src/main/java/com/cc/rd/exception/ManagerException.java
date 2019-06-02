@@ -18,7 +18,7 @@ public class ManagerException extends RuntimeException {
 
     public ManagerException(ErrorCodeEnum errorCodeEnum, String edesc) {
         this.errorCodeEnum = errorCodeEnum;
-        this.errorCodeEnum.seteDesc(edesc);
+        this.errorCodeEnum.setcDesc(edesc);
     }
 
     public ErrorCodeEnum getErrorCodeEnum() {

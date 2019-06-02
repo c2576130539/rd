@@ -4,6 +4,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -165,5 +166,33 @@ public class DateTimeUtils {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return localDateTime.format(formatter);
     }
+
+    private static String addZero(int param) {
+        String paramStr = param < 10 ? "0" + param : "" + param;
+        return paramStr;
+    }
+
+    /**
+     * 将毫秒字符串转成时间格式yyyy-MM-dd HH:mm
+     */
+    public static String getMil2mmTimeFormat(String timeStr) {
+        long time = Long.parseLong(timeStr);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        String monthStr = addZero(month);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String dayStr = addZero(day);
+        //24小时制
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        String hourStr = addZero(hour);
+        int minute = calendar.get(Calendar.MINUTE);
+        String minuteStr = addZero(minute);
+        int second = calendar.get(Calendar.SECOND);
+        String secondStr = addZero(second);
+        return (year + "-" + monthStr + "-" + dayStr + " " + hourStr + ":" + minuteStr);
+    }
+
 }
     

@@ -58,5 +58,11 @@ public class Constant {
      * 一个月多少毫秒
      */
     public static final Long MONTHS = ONE_MONTHS * DAYS;
+
+    /**
+     * 密码长度
+     */
+    public static final Integer MIN_PWD = 8;
+    public static final Integer MAX_PWD = 16;
 }
     

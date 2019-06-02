@@ -16,6 +16,7 @@ public enum ErrorCodeEnum {
     TELPHONE_ERROR(10005, "Telphone is wrong", "手机号码无效"),
     NEED_LOGIN(10006, "need to login", "需要登陆"),
     UNLOCK(10007, "Telphone unlock", "该账号已解锁"),
+    USER_PASSWORD_RULE(10008, "Password length", "密码长度为8～16"),
 
     INVALID_INPUT_PARAM(20000, "Params can not be null", "不允许为空"),
     CAPTCHA_CREATE_FAILED(20001, "Captcha image create failed", "验证码创建失败"),
@@ -25,6 +26,7 @@ public enum ErrorCodeEnum {
     SEND_CODE_FAILED(20005, "Sending code fail", "短信发送失败"),
     CAPTCHA_FREASH(20006, "Captcha image need to freash", "图片验证码已过期"),
     CAPTCHA_FAILED(20007, "Code is wrong", "图片验证码错误"),
+    CAPTCHA_CODE_NOT_NULL(20008, "CAPTCHA_Code not allow null", "图片验证码不允许为空"),
 
     FILE_NOT_EXIST(30000, "File hash is empty", "文件不存在"),
     FILE_DUPLICATE(30001, "Duplicate file hash in database", "文件重复"),

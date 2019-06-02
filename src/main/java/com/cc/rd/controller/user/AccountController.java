@@ -30,6 +30,12 @@ public class AccountController extends BaseController {
     @Autowired
     private LogOutService logOutService;
 
+    @ApiOperation(value = "获取当前登陆用户信息")
+    @GetMapping("/users")
+    public JSONResult getUser() {
+        return JSONResult.success(accountService.getLoginUser(Long.valueOf(getUserId())));
+    }
+
     @ApiOperation(value = "发送新用户手机注册验证码")
     @PostMapping("/accounts/newsendsms/{telphone}")
     public JSONResult sendNewCode(@PathVariable String telphone) {

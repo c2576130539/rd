@@ -36,9 +36,7 @@ public class JwtUtils {
         mapHeader.put("typ", "JWT");
         long iat = DateTimeUtils.utcNow();
         long exp = iat + Constant.MONTHS;
-        String token = JWT.create()
-                .withHeader(map)
-                .withIssuedAt(new Date(iat))
+        String token = JWT.create().withHeader(map).withIssuedAt(new Date(iat))
                 .withExpiresAt(new Date(exp))
                 .withClaim("userId", userId)
                 .withClaim("telphone",telphone)

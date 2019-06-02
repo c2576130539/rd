@@ -88,12 +88,16 @@
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
 -->
-        <!--<table tableName="order">
+
+        <table tableName="order">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="is_deleted" javaType="java.lang.Integer"/>
             <columnOverride column="order_type" javaType="java.lang.Integer"/>
             <columnOverride column="order_state" javaType="java.lang.Integer"/>
         </table>
+
+
+        <!--
 
         <table tableName="user">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>

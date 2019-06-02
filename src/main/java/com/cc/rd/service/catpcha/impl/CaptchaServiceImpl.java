@@ -9,6 +9,7 @@ import com.cc.rd.service.catpcha.CaptchaService;
 import com.cc.rd.service.catpcha.CaptchaTokenService;
 import com.cc.rd.validator.FastValidator;
 import com.cc.rd.vo.user.CaptchaVO;
+import jodd.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -82,8 +83,9 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     @Override
     public Boolean checkCode(String captchaToken, String code) {
-        FastValidator.start().notNull(captchaToken, "CaptchaToken")
-                .notNull(code, "code");
+        if (StringUtil.isEmpty(captchaToken) || StringUtil.isEmpty(code)) {
+            throw new ManagerException(ErrorCodeEnum.CAPTCHA_CODE_NOT_NULL);
+        }
 
         CaptchaToken token = captchaTokenService.decodeToken(captchaToken);
         if (null == token || token.isInvalid()) {

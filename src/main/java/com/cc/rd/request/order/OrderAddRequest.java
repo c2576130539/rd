@@ -58,6 +58,17 @@ public class OrderAddRequest {
      */
     private Integer orderCityCode;
 
+    /**
+     * 经度
+     */
+    private Double orderLongitude;
+
+    /**
+     * 纬度
+     */
+    private Double orderLatitude;
+
     private String orderAddress;
+
 }
     

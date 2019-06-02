@@ -19,5 +19,5 @@ public interface OrderService {
      */
     void addOrder(OrderAddRequest request, Long userId);
 
-    PageInfo listOrderSearch(OrderSearchRequest request);
+    OrderVO listOrderSearch(OrderSearchRequest request);
 }

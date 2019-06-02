@@ -68,7 +68,7 @@ public class StorageServiceImpl implements StorageService {
         FileVO fileVO = new FileVO();
         fileVO.setOriginName(originName);
         fileVO.setHash(hash);
-
+        fileVO.setFileSize(file.getSize());
         return fileVO;
     }
 

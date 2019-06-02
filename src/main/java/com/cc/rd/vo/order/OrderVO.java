@@ -1,6 +1,9 @@
 package com.cc.rd.vo.order;
 
+import com.google.common.collect.Lists;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @program: OrderVO
@@ -11,6 +14,7 @@ import lombok.Data;
 @Data
 public class OrderVO {
 
+    List<OrderListVO> orderList = Lists.newArrayList();
 
 }
-    
+
